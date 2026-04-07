@@ -1,0 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Bank_Transaction_and_Loan_management_System.Models
+{
+    public class User
+    {
+        [Key]
+        public int UserId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        public string PasswordHash { get; set; }
+
+        [Required]
+        public UserRole Role { get; set; }
+
+        [Required]
+        public bool IsActive { get; set; } = true;
+    }
+}

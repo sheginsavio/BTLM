@@ -1,0 +1,12 @@
+﻿using Bank_Transaction_and_Loan_management_System.Models;
+
+namespace Bank_Transaction_and_Loan_management_System.Interfaces
+{
+    public interface ILoanService
+    {
+        Task<bool> ApplyLoanAsync(int customerId, decimal loanAmount, decimal interestRate);
+        Task<bool> ApproveLoanAsync(int loanId);
+        Task<bool> RejectLoanAsync(int loanId);
+        Task<Loan?> GetLoanByIdAsync(int loanId);
+    }
+}

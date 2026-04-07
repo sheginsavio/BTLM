@@ -1,0 +1,78 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TransactionController : ControllerBase
+    {
+        private readonly ITransactionService _transactionService;
+
+        public TransactionController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+
+        [HttpPost("deposit")]
+        public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _transactionService.DepositAsync(request.AccountId, request.Amount);
+            
+            if (!result)
+                return BadRequest("Deposit operation failed.");
+
+            return Ok("Deposit successful.");
+        }
+
+        [HttpPost("withdraw")]
+        public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _transactionService.WithdrawAsync(request.AccountId, request.Amount);
+            
+            if (!result)
+                return BadRequest("Withdrawal operation failed.");
+
+            return Ok("Withdrawal successful.");
+        }
+
+        [HttpPost("transfer")]
+        public async Task<IActionResult> Transfer([FromBody] TransferRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _transactionService.TransferAsync(request.FromAccountId, request.ToAccountId, request.Amount);
+            
+            if (!result)
+                return BadRequest("Transfer operation failed.");
+
+            return Ok("Transfer successful.");
+        }
+    }
+
+    public class DepositRequest
+    {
+        public int AccountId { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+    public class WithdrawRequest
+    {
+        public int AccountId { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+    public class TransferRequest
+    {
+        public int FromAccountId { get; set; }
+        public int ToAccountId { get; set; }
+        public decimal Amount { get; set; }
+    }
+}

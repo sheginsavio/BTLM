@@ -1,27 +1,4 @@
-﻿# Build results
+# Build results
 bin/
 obj/
 
-# Visual Studio
-.vs/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Logs
-*.log
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# ASP.NET Core
-appsettings.Development.json
-
-# Rider / VS Code (optional)
-.idea/
-.vscode/
-
-# EF Core migrations (optional - include if needed later)
-# Migrations/

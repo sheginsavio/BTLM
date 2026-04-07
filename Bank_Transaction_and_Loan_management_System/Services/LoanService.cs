@@ -1,0 +1,177 @@
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bank_Transaction_and_Loan_management_System.Services
+{
+    public class LoanService : ILoanService
+    {
+        private readonly BankingDbContext _context;
+
+        public LoanService(BankingDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<LoanDto> ApplyLoanAsync(int customerId, decimal loanAmount, decimal interestRate, int userId)
+        {
+            try
+            {
+                // Users can only apply loans for themselves (assuming userId maps to customerId)
+                if (customerId != userId)
+                    throw new UnauthorizedAccessException("You can only apply for loans for your own account.");
+
+                if (loanAmount <= 0)
+                    throw new ArgumentException("Loan amount must be greater than 0");
+
+                if (interestRate <= 0 || interestRate > 100)
+                    throw new ArgumentException("Interest rate must be between 0.01 and 100");
+
+                var customer = await _context.Customers.FindAsync(customerId);
+                if (customer == null)
+                    throw new InvalidOperationException("Customer not found.");
+
+                var loan = new Loan
+                {
+                    CustomerId = customerId,
+                    LoanAmount = loanAmount,
+                    InterestRate = interestRate,
+                    LoanStatus = LoanStatus.APPLIED
+                };
+
+                _context.Loans.Add(loan);
+                await _context.SaveChangesAsync();
+
+                return new LoanDto
+                {
+                    LoanId = loan.LoanId,
+                    CustomerId = loan.CustomerId,
+                    LoanAmount = loan.LoanAmount,
+                    InterestRate = loan.InterestRate,
+                    LoanStatus = loan.LoanStatus.ToString()
+                };
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to apply for loan.", ex);
+            }
+        }
+
+        public async Task<bool> ApproveLoanAsync(int loanId, string userRole)
+        {
+            try
+            {
+                // Only Admins can approve loans
+                if (userRole != "Admin")
+                    throw new UnauthorizedAccessException("Only admins can approve loans.");
+
+                var loan = await _context.Loans.FindAsync(loanId);
+                if (loan == null)
+                    throw new InvalidOperationException("Loan not found.");
+
+                if (loan.LoanStatus != LoanStatus.APPLIED)
+                    throw new InvalidOperationException("Only pending loans can be approved.");
+
+                loan.LoanStatus = LoanStatus.APPROVED;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to approve loan.", ex);
+            }
+        }
+
+        public async Task<bool> RejectLoanAsync(int loanId, string userRole)
+        {
+            try
+            {
+                // Only Admins can reject loans
+                if (userRole != "Admin")
+                    throw new UnauthorizedAccessException("Only admins can reject loans.");
+
+                var loan = await _context.Loans.FindAsync(loanId);
+                if (loan == null)
+                    throw new InvalidOperationException("Loan not found.");
+
+                if (loan.LoanStatus != LoanStatus.APPLIED)
+                    throw new InvalidOperationException("Only pending loans can be rejected.");
+
+                loan.LoanStatus = LoanStatus.REJECTED;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to reject loan.", ex);
+            }
+        }
+
+        public async Task<LoanDto?> GetLoanByIdAsync(int loanId, int userId, string userRole)
+        {
+            try
+            {
+                var loan = await _context.Loans.FindAsync(loanId);
+                if (loan == null)
+                    return null;
+
+                // Users can only view their own loans, Admins can view all
+                if (loan.CustomerId != userId && userRole != "Admin")
+                    throw new UnauthorizedAccessException("You don't have access to this loan.");
+
+                return new LoanDto
+                {
+                    LoanId = loan.LoanId,
+                    CustomerId = loan.CustomerId,
+                    LoanAmount = loan.LoanAmount,
+                    InterestRate = loan.InterestRate,
+                    LoanStatus = loan.LoanStatus.ToString()
+                };
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to retrieve loan.", ex);
+            }
+        }
+
+        public async Task<List<LoanDto>> GetUserLoansAsync(int userId)
+        {
+            try
+            {
+                var loans = await _context.Loans
+                    .Where(l => l.CustomerId == userId)
+                    .Select(l => new LoanDto
+                    {
+                        LoanId = l.LoanId,
+                        CustomerId = l.CustomerId,
+                        LoanAmount = l.LoanAmount,
+                        InterestRate = l.InterestRate,
+                        LoanStatus = l.LoanStatus.ToString()
+                    })
+                    .ToListAsync();
+
+                return loans;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to retrieve loans.", ex);
+            }
+        }
+    }
+}

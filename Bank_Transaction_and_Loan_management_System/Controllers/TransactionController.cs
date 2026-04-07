@@ -1,0 +1,80 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models.DTOs;
+using System.Security.Claims;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class TransactionController : ControllerBase
+    {
+        private readonly ITransactionService _transactionService;
+        private readonly ILogger<TransactionController> _logger;
+
+        public TransactionController(ITransactionService transactionService, ILogger<TransactionController> logger)
+        {
+            _transactionService = transactionService;
+            _logger = logger;
+        }
+
+        [HttpPost("deposit")]
+        public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} initiating deposit of {Amount} to account {AccountId}", userId, request.Amount, request.AccountId);
+            var transaction = await _transactionService.DepositAsync(request.AccountId, request.Amount, userId);
+            _logger.LogInformation("Deposit successful for user {UserId}", userId);
+            return Ok(new { message = "Deposit successful.", transaction });
+        }
+
+        [HttpPost("withdraw")]
+        public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} initiating withdrawal of {Amount} from account {AccountId}", userId, request.Amount, request.AccountId);
+            var transaction = await _transactionService.WithdrawAsync(request.AccountId, request.Amount, userId);
+            _logger.LogInformation("Withdrawal successful for user {UserId}", userId);
+            return Ok(new { message = "Withdrawal successful.", transaction });
+        }
+
+        [HttpPost("transfer")]
+        public async Task<IActionResult> Transfer([FromBody] TransferRequest request)
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} initiating transfer of {Amount} from account {FromAccountId} to account {ToAccountId}", userId, request.Amount, request.FromAccountId, request.ToAccountId);
+            var transaction = await _transactionService.TransferAsync(request.FromAccountId, request.ToAccountId, request.Amount, userId);
+            _logger.LogInformation("Transfer successful for user {UserId}", userId);
+            return Ok(new { message = "Transfer successful.", transaction });
+        }
+
+        [HttpGet("my-transactions")]
+        public async Task<IActionResult> GetMyTransactions()
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} retrieving transactions", userId);
+            var transactions = await _transactionService.GetUserTransactionsAsync(userId);
+            return Ok(transactions);
+        }
+
+        private int GetUserIdFromClaims()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId) ? userId : 0;
+        }
+    }
+}

@@ -1,0 +1,99 @@
+﻿using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bank_Transaction_and_Loan_management_System.Services
+{
+    public class LoanService : ILoanService
+    {
+        private readonly BankingDbContext _context;
+
+        public LoanService(BankingDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<bool> ApplyLoanAsync(int customerId, decimal loanAmount, decimal interestRate)
+        {
+            try
+            {
+                if (loanAmount <= 0 || interestRate <= 0)
+                    return false;
+
+                var customer = await _context.Customers.FindAsync(customerId);
+                if (customer == null)
+                    return false;
+
+                var loan = new Loan
+                {
+                    CustomerId = customerId,
+                    LoanAmount = loanAmount,
+                    InterestRate = interestRate,
+                    LoanStatus = LoanStatus.APPLIED
+                };
+
+                _context.Loans.Add(loan);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ApproveLoanAsync(int loanId)
+        {
+            try
+            {
+                var loan = await _context.Loans.FindAsync(loanId);
+                if (loan == null)
+                    return false;
+
+                if (loan.LoanStatus != LoanStatus.APPLIED)
+                    return false;
+
+                loan.LoanStatus = LoanStatus.APPROVED;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RejectLoanAsync(int loanId)
+        {
+            try
+            {
+                var loan = await _context.Loans.FindAsync(loanId);
+                if (loan == null)
+                    return false;
+
+                if (loan.LoanStatus != LoanStatus.APPLIED)
+                    return false;
+
+                loan.LoanStatus = LoanStatus.REJECTED;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<Loan?> GetLoanByIdAsync(int loanId)
+        {
+            try
+            {
+                return await _context.Loans.FindAsync(loanId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+    }
+}

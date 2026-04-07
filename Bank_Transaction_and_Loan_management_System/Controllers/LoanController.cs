@@ -1,0 +1,105 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models.DTOs;
+using System.Security.Claims;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class LoanController : ControllerBase
+    {
+        private readonly ILoanService _loanService;
+        private readonly ILogger<LoanController> _logger;
+
+        public LoanController(ILoanService loanService, ILogger<LoanController> logger)
+        {
+            _loanService = loanService;
+            _logger = logger;
+        }
+
+        [HttpPost("apply")]
+        public async Task<IActionResult> ApplyLoan([FromBody] ApplyLoanRequest request)
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} applying for loan of amount {LoanAmount} for customer {CustomerId}", userId, request.LoanAmount, request.CustomerId);
+            var loan = await _loanService.ApplyLoanAsync(request.CustomerId, request.LoanAmount, request.InterestRate, userId);
+            _logger.LogInformation("Loan application submitted successfully for user {UserId}", userId);
+            return Ok(new { message = "Loan application submitted successfully.", loan });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/approve")]
+        public async Task<IActionResult> ApproveLoan(int id)
+        {
+            var userRole = GetUserRoleFromClaims();
+            _logger.LogInformation("Admin user approving loan ID {LoanId}", id);
+            await _loanService.ApproveLoanAsync(id, userRole);
+            _logger.LogInformation("Loan ID {LoanId} approved successfully", id);
+            return Ok(new { message = "Loan approved successfully." });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/reject")]
+        public async Task<IActionResult> RejectLoan(int id)
+        {
+            var userRole = GetUserRoleFromClaims();
+            _logger.LogInformation("Admin user rejecting loan ID {LoanId}", id);
+            await _loanService.RejectLoanAsync(id, userRole);
+            _logger.LogInformation("Loan ID {LoanId} rejected successfully", id);
+            return Ok(new { message = "Loan rejected successfully." });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLoanById(int id)
+        {
+            var userId = GetUserIdFromClaims();
+            var userRole = GetUserRoleFromClaims();
+
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} retrieving loan details for loan ID {LoanId}", userId, id);
+            var loan = await _loanService.GetLoanByIdAsync(id, userId, userRole);
+            if (loan == null)
+                return NotFound(new { message = "Loan not found." });
+
+            return Ok(loan);
+        }
+
+        [HttpGet("my-loans")]
+        public async Task<IActionResult> GetMyLoans()
+        {
+            var userId = GetUserIdFromClaims();
+            if (userId == 0)
+                return Unauthorized(new { message = "Invalid user identity." });
+
+            _logger.LogInformation("User {UserId} retrieving their loans", userId);
+            var loans = await _loanService.GetUserLoansAsync(userId);
+            return Ok(loans);
+        }
+
+        private int GetUserIdFromClaims()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId) ? userId : 0;
+        }
+
+        private string GetUserRoleFromClaims()
+        {
+            return User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
+        }
+    }
+
+    public class ApplyLoanRequest
+    {
+        public int CustomerId { get; set; }
+        public decimal LoanAmount { get; set; }
+        public decimal InterestRate { get; set; }
+    }
+}

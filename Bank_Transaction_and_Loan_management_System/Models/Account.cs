@@ -18,6 +18,9 @@ namespace Bank_Transaction_and_Loan_management_System.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; } = true;
+
         public Customer Customer { get; set; }
     }
 }

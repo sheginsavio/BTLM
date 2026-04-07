@@ -1,0 +1,8 @@
+﻿namespace Bank_Transaction_and_Loan_management_System.Models.DTOs
+{
+    public class UserLoginDto
+    {
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+    }
+}

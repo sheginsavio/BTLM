@@ -22,5 +22,6 @@ namespace Bank_Transaction_and_Loan_management_System.Models
         public DateTime TransactionDate { get; set; }
 
         public Account? Account { get; set; }
+        public List<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
     }
 }

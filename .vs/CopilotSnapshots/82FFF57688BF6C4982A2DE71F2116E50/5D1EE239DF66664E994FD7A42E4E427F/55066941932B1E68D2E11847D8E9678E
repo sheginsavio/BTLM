@@ -1,0 +1,55 @@
+﻿using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bank_Transaction_and_Loan_management_System.Services
+{
+    public class RepaymentService : IRepaymentService
+    {
+        private readonly BankingDbContext _context;
+
+        public RepaymentService(BankingDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<bool> RecordRepaymentAsync(int loanId, decimal amount)
+        {
+            if (amount <= 0)
+                return false;
+
+            var loan = await _context.Loans.FindAsync(loanId);
+            if (loan == null || loan.LoanStatus != LoanStatus.APPROVED)
+                return false;
+
+            var totalPaid = await _context.Repayments
+                .Where(r => r.LoanId == loanId)
+                .Select(r => (decimal?)r.AmountPaid)
+                .SumAsync() ?? 0;
+
+            var remaining = loan.LoanAmount - totalPaid;
+            if (amount > remaining)
+                return false;
+
+            var repayment = new Repayment
+            {
+                LoanId = loanId,
+                RepaymentDate = DateTime.UtcNow,
+                AmountPaid = amount,
+                BalanceRemaining = remaining - amount
+            };
+
+            _context.Repayments.Add(repayment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Repayment>> GetRepaymentHistoryAsync(int loanId)
+        {
+            return await _context.Repayments
+                .Where(r => r.LoanId == loanId)
+                .OrderBy(r => r.RepaymentDate)
+                .ToListAsync();
+        }
+    }
+}

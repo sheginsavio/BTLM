@@ -1,0 +1,21 @@
+﻿using Bank_Transaction_and_Loan_management_System.Models.DTOs;
+
+namespace Bank_Transaction_and_Loan_management_System.Interfaces
+{
+    public interface ITransactionService
+    {
+        Task<TransactionDto> DepositAsync(int accountId, decimal amount, int userId);
+        Task<TransactionDto> WithdrawAsync(int accountId, decimal amount, int userId);
+        Task<TransactionDto> TransferAsync(int fromAccountId, int toAccountId, decimal amount, int userId);
+        Task<List<TransactionDto>> GetUserTransactionsAsync(int userId);
+    }
+
+    public class TransactionDto
+    {
+        public int TransactionId { get; set; }
+        public int AccountId { get; set; }
+        public string TransactionType { get; set; } = null!;
+        public decimal Amount { get; set; }
+        public DateTime TransactionDate { get; set; }
+    }
+}

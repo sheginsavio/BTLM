@@ -1,0 +1,27 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Bank_Transaction_and_Loan_management_System.Models
+{
+    public class AuditLog
+    {
+        [Key]
+        public int LogId { get; set; }
+
+        [ForeignKey(nameof(BankTransaction))]
+        public int TransactionId { get; set; }
+
+        [Required]
+        public DateTime LogDate { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string ActionPerformed { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string PerformedBy { get; set; }
+
+        public BankTransaction? BankTransaction { get; set; }
+    }
+}

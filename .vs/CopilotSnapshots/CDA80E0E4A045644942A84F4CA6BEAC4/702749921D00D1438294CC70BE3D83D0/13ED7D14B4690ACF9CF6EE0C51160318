@@ -1,0 +1,106 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Bank_Transaction_and_Loan_management_System.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class UserController : ControllerBase
+    {
+        private readonly BankingDbContext _context;
+
+        public UserController(BankingDbContext context)
+        {
+            _context = context;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _context.Users
+                    .Select(u => new { u.UserId, u.Username, u.Role })
+                    .ToListAsync();
+
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            try
+            {
+                var userId = GetUserIdFromClaims();
+                var userRole = GetUserRoleFromClaims();
+
+                // Users can only access their own data unless they are Admin
+                if (userId != id && userRole != "Admin")
+                    return Forbid();
+
+                var user = await _context.Users
+                    .Where(u => u.UserId == id)
+                    .Select(u => new { u.UserId, u.Username, u.Role })
+                    .FirstOrDefaultAsync();
+
+                if (user == null)
+                    return NotFound(new { message = "User not found." });
+
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/role")]
+        public async Task<IActionResult> UpdateUserRole(int id, [FromBody] UpdateRoleRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(request.Role))
+                    return BadRequest(new { message = "Role is required." });
+
+                var user = await _context.Users.FindAsync(id);
+                if (user == null)
+                    return NotFound(new { message = "User not found." });
+
+                user.Role = request.Role;
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "User role updated successfully.", user = new { user.UserId, user.Username, user.Role } });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        private int GetUserIdFromClaims()
+        {
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            return userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId) ? userId : 0;
+        }
+
+        private string GetUserRoleFromClaims()
+        {
+            return User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? string.Empty;
+        }
+    }
+
+    public class UpdateRoleRequest
+    {
+        public string Role { get; set; } = null!;
+    }
+}

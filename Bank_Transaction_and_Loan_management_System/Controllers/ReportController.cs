@@ -1,0 +1,45 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+using System.Security.Claims;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(Roles = "Admin")]
+    public class ReportController : ControllerBase
+    {
+        private readonly IReportService _reportService;
+        private readonly ILogger<ReportController> _logger;
+
+        public ReportController(IReportService reportService, ILogger<ReportController> logger)
+        {
+            _reportService = reportService;
+            _logger = logger;
+        }
+
+        [HttpGet("transactions")]
+        public async Task<IActionResult> GetAllTransactions()
+        {
+            var userRole = GetUserRoleFromClaims();
+            _logger.LogInformation("Admin user retrieving all transactions");
+            var transactions = await _reportService.GetAllTransactionsAsync(userRole);
+            return Ok(transactions);
+        }
+
+        [HttpGet("audit-logs")]
+        public async Task<IActionResult> GetAuditLogs()
+        {
+            var userRole = GetUserRoleFromClaims();
+            _logger.LogInformation("Admin user retrieving audit logs");
+            var auditLogs = await _reportService.GetAuditLogsAsync(userRole);
+            return Ok(auditLogs);
+        }
+
+        private string GetUserRoleFromClaims()
+        {
+            return User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
+        }
+    }
+}

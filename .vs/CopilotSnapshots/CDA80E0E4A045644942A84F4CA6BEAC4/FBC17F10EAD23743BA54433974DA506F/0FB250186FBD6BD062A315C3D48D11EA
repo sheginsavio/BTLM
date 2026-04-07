@@ -1,0 +1,135 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Bank_Transaction_and_Loan_management_System.Interfaces;
+using Bank_Transaction_and_Loan_management_System.Models.DTOs;
+using System.Security.Claims;
+
+namespace Bank_Transaction_and_Loan_management_System.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class TransactionController : ControllerBase
+    {
+        private readonly ITransactionService _transactionService;
+
+        public TransactionController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+
+        [HttpPost("deposit")]
+        public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
+        {
+            try
+            {
+                var userId = GetUserIdFromClaims();
+                if (userId == 0)
+                    return Unauthorized(new { message = "Invalid user identity." });
+
+                var transaction = await _transactionService.DepositAsync(request.AccountId, request.Amount, userId);
+                return Ok(new { message = "Deposit successful.", transaction });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpPost("withdraw")]
+        public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
+        {
+            try
+            {
+                var userId = GetUserIdFromClaims();
+                if (userId == 0)
+                    return Unauthorized(new { message = "Invalid user identity." });
+
+                var transaction = await _transactionService.WithdrawAsync(request.AccountId, request.Amount, userId);
+                return Ok(new { message = "Withdrawal successful.", transaction });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpPost("transfer")]
+        public async Task<IActionResult> Transfer([FromBody] TransferRequest request)
+        {
+            try
+            {
+                var userId = GetUserIdFromClaims();
+                if (userId == 0)
+                    return Unauthorized(new { message = "Invalid user identity." });
+
+                var transaction = await _transactionService.TransferAsync(request.FromAccountId, request.ToAccountId, request.Amount, userId);
+                return Ok(new { message = "Transfer successful.", transaction });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpGet("my-transactions")]
+        public async Task<IActionResult> GetMyTransactions()
+        {
+            try
+            {
+                var userId = GetUserIdFromClaims();
+                if (userId == 0)
+                    return Unauthorized(new { message = "Invalid user identity." });
+
+                var transactions = await _transactionService.GetUserTransactionsAsync(userId);
+                return Ok(transactions);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        private int GetUserIdFromClaims()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId) ? userId : 0;
+        }
+    }
+}
