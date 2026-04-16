@@ -1,9 +1,0 @@
-﻿namespace Bank_Transaction_and_Loan_management_System.Interfaces
-{
-    public interface ITransactionService
-    {
-        Task<bool> DepositAsync(int accountId, decimal amount);
-        Task<bool> WithdrawAsync(int accountId, decimal amount);
-        Task<bool> TransferAsync(int fromAccountId, int toAccountId, decimal amount);
-    }
-}
