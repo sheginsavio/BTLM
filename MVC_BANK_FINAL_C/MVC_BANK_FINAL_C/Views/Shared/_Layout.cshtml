@@ -1,0 +1,171 @@
+@{
+    var sessionUsername = Context.Session.GetString("Username") ?? "";
+    var sessionRole     = Context.Session.GetString("UserRole") ?? "";
+    bool isAdmin        = sessionRole == "Admin";
+    bool isTeller       = sessionRole == "Teller";
+    bool isLoanOfficer  = sessionRole == "LoanOfficer";
+    bool isAuditor      = sessionRole == "Auditor";
+    bool isCustomer     = sessionRole == "Customer";
+
+    string roleBadgeClass = sessionRole switch
+    {
+        "Admin"       => "bg-danger",
+        "Teller"      => "bg-success",
+        "LoanOfficer" => "bg-warning text-dark",
+        "Auditor"     => "bg-info text-dark",
+        "Customer"    => "bg-primary",
+        _             => "bg-secondary"
+    };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Banking System</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MVC_BANK_FINAL_C.styles.css" asp-append-version="true" />
+    <style>
+        body { background-color: #f0f2f5; }
+        .sidebar { min-height: calc(100vh - 56px); background: #1a1a2e; }
+        .sidebar .nav-link { color: #a0aec0; padding: 0.55rem 1.25rem; font-size: .9rem; }
+        .sidebar .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); border-radius: 5px; }
+        .nav-section { color: #4a5568; font-size: 0.68rem; text-transform: uppercase;
+                       padding: 0.85rem 1.25rem 0.2rem; letter-spacing: 1.2px; }
+        .main-content { padding: 1.5rem; }
+        .card-stat { border-left: 4px solid; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background:#0f3460;">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                &#127981; BankingSystem
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Dashboard</a></li>
+
+                    @if (isAdmin || isTeller)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a></li>
+                    }
+                    @if (isAdmin || isTeller || isAuditor || isCustomer)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Transaction" asp-action="Index">Transactions</a></li>
+                    }
+                    @if (isAdmin || isLoanOfficer || isAuditor || isCustomer)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Loan" asp-action="Index">Loans</a></li>
+                    }
+                    @if (isAdmin || isAuditor)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Reports</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-controller="Report" asp-action="Transactions">Transaction Report</a></li>
+                                <li><a class="dropdown-item" asp-controller="Report" asp-action="AuditLogs">Audit Logs</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrEmpty(sessionUsername))
+                    {
+                        <li class="nav-item d-flex align-items-center gap-2 ms-2">
+                            <span class="badge @roleBadgeClass">@sessionRole</span>
+                            <span class="text-white-50 small fw-semibold">@sessionUsername</span>
+                            <a asp-controller="Auth" asp-action="Logout" class="btn btn-sm btn-outline-light ms-1">Logout</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block sidebar py-3">
+                <div class="nav flex-column">
+                    <div class="nav-section">Main</div>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Dashboard</a>
+
+                    @if (isAdmin || isTeller)
+                    {
+                        <div class="nav-section">Banking</div>
+                        <a class="nav-link" asp-controller="Customer" asp-action="Index">All Customers</a>
+                        <a class="nav-link" asp-controller="Customer" asp-action="Create">+ Add Customer</a>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Index">Transactions</a>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Deposit">Deposit</a>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Withdraw">Withdraw</a>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Transfer">Transfer</a>
+                    }
+
+                    @if (isAuditor)
+                    {
+                        <div class="nav-section">Banking</div>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Index">Transactions</a>
+                    }
+
+                    @if (isCustomer)
+                    {
+                        <div class="nav-section">My Banking</div>
+                        <a class="nav-link" asp-controller="Transaction" asp-action="Index">My Transactions</a>
+                        <a class="nav-link" asp-controller="Loan" asp-action="Index">My Loans</a>
+                        <a class="nav-link" asp-controller="Loan" asp-action="Apply">Apply for Loan</a>
+                    }
+
+                    @if (isAdmin || isLoanOfficer)
+                    {
+                        <div class="nav-section">Loans</div>
+                        <a class="nav-link" asp-controller="Loan" asp-action="Index">All Loans</a>
+                        <a class="nav-link" asp-controller="Loan" asp-action="Apply">Apply for Loan</a>
+                        <a class="nav-link" asp-controller="Repayment" asp-action="Record">Record Repayment</a>
+                    }
+
+                    @if (isAuditor)
+                    {
+                        <div class="nav-section">Loans</div>
+                        <a class="nav-link" asp-controller="Loan" asp-action="Index">All Loans</a>
+                    }
+
+                    @if (isAdmin || isAuditor)
+                    {
+                        <div class="nav-section">Reports</div>
+                        <a class="nav-link" asp-controller="Report" asp-action="Transactions">Transaction Report</a>
+                        <a class="nav-link" asp-controller="Report" asp-action="AuditLogs">Audit Logs</a>
+                    }
+                </div>
+            </nav>
+
+            <main class="col-md-10 ms-sm-auto main-content">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @TempData["Error"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

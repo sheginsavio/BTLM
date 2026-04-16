@@ -1,0 +1,39 @@
+@model MVC_BANK_FINAL_C.Models.Entities.Loan
+@{
+    ViewData["Title"] = "Approve / Reject Loan";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Loan Decision</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
+
+<div class="card shadow-sm" style="max-width: 540px;">
+    <div class="card-header bg-warning fw-semibold">Loan #@Model.LoanId - Pending Review</div>
+    <div class="card-body">
+        <dl class="row mb-4">
+            <dt class="col-sm-4">Customer</dt>
+            <dd class="col-sm-8">@(Model.Customer?.Name ?? "-")</dd>
+            <dt class="col-sm-4">Loan Amount</dt>
+            <dd class="col-sm-8 fw-semibold">@Model.LoanAmount.ToString("C")</dd>
+            <dt class="col-sm-4">Interest Rate</dt>
+            <dd class="col-sm-8">@Model.InterestRate%</dd>
+            <dt class="col-sm-4">Current Status</dt>
+            <dd class="col-sm-8"><span class="badge bg-secondary">@Model.LoanStatus</span></dd>
+        </dl>
+
+        <form asp-action="Approve" asp-route-id="@Model.LoanId" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="decision" id="decision" value="" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success" onclick="document.getElementById('decision').value='APPROVE'">
+                    Approve Loan
+                </button>
+                <button type="submit" class="btn btn-danger" onclick="document.getElementById('decision').value='REJECT'">
+                    Reject Loan
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

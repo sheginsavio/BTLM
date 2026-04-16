@@ -1,0 +1,55 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.RepaymentViewModel
+@{
+    ViewData["Title"] = "Record Repayment";
+    var loans = ViewBag.Loans as IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Loan>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Record Repayment</h2>
+    <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-secondary">Back to Loans</a>
+</div>
+
+<div class="card shadow-sm" style="max-width: 520px;">
+    <div class="card-header bg-success text-white fw-semibold">Repayment Entry</div>
+    <div class="card-body">
+        <form asp-action="Record" method="post">
+            @Html.AntiForgeryToken()
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            }
+            <div class="mb-3">
+                <label asp-for="LoanId" class="form-label fw-semibold">Loan</label>
+                <select asp-for="LoanId" class="form-select">
+                    <option value="">-- Select Loan --</option>
+                    @if (loans != null)
+                    {
+                        @foreach (var l in loans.Where(l => l.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPROVED))
+                        {
+                            <option value="@l.LoanId" selected="@(Model.LoanId == l.LoanId)">
+                                Loan #@l.LoanId — @(l.Customer?.Name ?? "Unknown") (@l.LoanAmount.ToString("C"))
+                            </option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="LoanId" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AmountPaid" class="form-label fw-semibold">Amount Paid</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="AmountPaid" class="form-control" type="number" step="0.01" min="0.01" placeholder="0.00" />
+                </div>
+                <span asp-validation-for="AmountPaid" class="text-danger small"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Record Repayment</button>
+                <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

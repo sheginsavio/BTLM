@@ -1,0 +1,128 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.LoanViewModel
+@{
+    ViewData["Title"] = "Apply for Loan";
+    var customers  = ViewBag.Customers as IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Customer>;
+    var loanTypes  = ViewBag.LoanTypes as IEnumerable<string> ?? new[] { "Personal","Home","Car","Education","Business" };
+    var tenures    = ViewBag.Tenures   as IEnumerable<int>    ?? new[] { 1,2,3,4,5 };
+    var sessionRole = Context.Session.GetString("UserRole") ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Apply for Loan</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
+
+<div class="card shadow-sm" style="max-width: 600px;">
+    <div class="card-header bg-primary text-white fw-semibold">Loan Application</div>
+    <div class="card-body">
+        <form asp-action="Apply" method="post" id="loanForm">
+            @Html.AntiForgeryToken()
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            }
+
+            @* Customer selector: Admin sees dropdown; Customer sees read-only *@
+            @if (sessionRole == "Admin" && customers != null)
+            {
+                <div class="mb-3">
+                    <label asp-for="CustomerId" class="form-label fw-semibold">Customer</label>
+                    <select asp-for="CustomerId" class="form-select">
+                        <option value="">-- Select Customer --</option>
+                        @foreach (var c in customers)
+                        {
+                            <option value="@c.CustomerId">@c.Name (@c.Email)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CustomerId" class="text-danger small"></span>
+                </div>
+            }
+
+            <div class="mb-3">
+                <label asp-for="LoanType" class="form-label fw-semibold">Loan Type</label>
+                <select asp-for="LoanType" class="form-select" id="LoanType">
+                    <option value="">-- Select Loan Type --</option>
+                    @foreach (var t in loanTypes)
+                    {
+                        <option value="@t">@t Loan</option>
+                    }
+                </select>
+                <span asp-validation-for="LoanType" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LoanAmount" class="form-label fw-semibold">Loan Amount</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="LoanAmount" class="form-control" type="number" step="0.01" min="1" placeholder="0.00" id="LoanAmount" />
+                </div>
+                <span asp-validation-for="LoanAmount" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Tenure" class="form-label fw-semibold">Tenure (Years)</label>
+                <select asp-for="Tenure" class="form-select" id="Tenure">
+                    @foreach (var yr in tenures)
+                    {
+                        <option value="@yr">@yr @(yr == 1 ? "Year" : "Years")</option>
+                    }
+                </select>
+                <span asp-validation-for="Tenure" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="InterestRate" class="form-label fw-semibold">Interest Rate (%)</label>
+                <div class="input-group">
+                    <input asp-for="InterestRate" class="form-control" id="InterestRate"
+                           readonly placeholder="Auto-filled based on loan type" />
+                    <span class="input-group-text">%</span>
+                </div>
+                <div class="form-text">Rate is auto-filled based on loan type selection.</div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Estimated Monthly EMI</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="text" id="EMIPreview" class="form-control" readonly placeholder="Calculated on submit" />
+                </div>
+                <div class="form-text">Simple interest formula: (P × R × T / 100 + P) / (T × 12)</div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Submit Application</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function fetchRateAndUpdateEMI() {
+            var loanType = document.getElementById('LoanType').value;
+            var amount   = parseFloat(document.getElementById('LoanAmount').value) || 0;
+            var tenure   = parseInt(document.getElementById('Tenure').value) || 1;
+
+            if (!loanType) { return; }
+
+            fetch('/Loan/GetInterestRate?loanType=' + encodeURIComponent(loanType))
+                .then(r => r.json())
+                .then(rate => {
+                    document.getElementById('InterestRate').value = rate;
+                    // Calculate preview EMI
+                    if (amount > 0) {
+                        var si    = amount * rate * tenure / 100;
+                        var total = amount + si;
+                        var emi   = total / (tenure * 12);
+                        document.getElementById('EMIPreview').value = '$' + emi.toFixed(2);
+                    }
+                });
+        }
+
+        document.getElementById('LoanType').addEventListener('change', fetchRateAndUpdateEMI);
+        document.getElementById('LoanAmount').addEventListener('input', fetchRateAndUpdateEMI);
+        document.getElementById('Tenure').addEventListener('change', fetchRateAndUpdateEMI);
+    </script>
+}

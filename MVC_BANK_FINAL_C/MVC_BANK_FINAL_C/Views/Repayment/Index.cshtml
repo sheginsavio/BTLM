@@ -1,0 +1,73 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Repayment>
+@{
+    ViewData["Title"] = "Repayment History";
+    var loan = ViewBag.Loan as MVC_BANK_FINAL_C.Models.Entities.Loan;
+    int loanId = ViewBag.LoanId;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Repayment History — Loan #@loanId</h2>
+    <div>
+        @{
+            var userRole = Context.Session.GetString("UserRole");
+        }
+        @if (userRole == "Admin" || userRole == "LoanOfficer")
+        {
+            <a asp-action="Record" asp-route-loanId="@loanId"
+               class="btn btn-success me-2">+ Record Repayment</a>
+        }
+        @if (userRole == "Customer")
+        {
+            <a asp-action="CustomerRepay" asp-route-loanId="@loanId"
+               class="btn btn-success me-2">Make Repayment</a>
+        }
+        <a asp-action="Interest" asp-route-loanId="@loanId" class="btn btn-warning me-2">Calculate Interest</a>
+        <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-secondary">Back to Loans</a>
+    </div>
+</div>
+
+@if (loan != null)
+{
+    <div class="card shadow-sm mb-4" style="max-width: 450px;">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-5">Customer</dt>
+                <dd class="col-sm-7">@(loan.Customer?.Name ?? "-")</dd>
+                <dt class="col-sm-5">Loan Amount</dt>
+                <dd class="col-sm-7 fw-semibold">@loan.LoanAmount.ToString("C")</dd>
+                <dt class="col-sm-5">Interest Rate</dt>
+                <dd class="col-sm-7">@loan.InterestRate%</dd>
+            </dl>
+        </div>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Amount Paid</th>
+                    <th>Balance Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="4" class="text-center text-muted py-4">No repayments recorded for this loan.</td></tr>
+                }
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.RepaymentId</td>
+                        <td>@r.RepaymentDate.ToString("dd MMM yyyy HH:mm")</td>
+                        <td class="text-success fw-semibold">@r.AmountPaid.ToString("C")</td>
+                        <td class="@(r.BalanceRemaining == 0 ? "text-success" : "text-danger") fw-semibold">@r.BalanceRemaining.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

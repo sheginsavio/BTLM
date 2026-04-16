@@ -1,0 +1,67 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Loan>
+@{
+    ViewData["Title"] = "Loans";
+    var sessionRole = Context.Session.GetString("UserRole") ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Loans</h2>
+    @if (sessionRole == "Admin" || sessionRole == "Customer")
+    {
+        <a asp-action="Apply" class="btn btn-primary">Apply for Loan</a>
+    }
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Tenure</th>
+                    <th>Monthly EMI</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="9" class="text-center text-muted py-4">No loans found.</td></tr>
+                }
+                @foreach (var loan in Model)
+                {
+                    <tr>
+                        <td>@loan.LoanId</td>
+                        <td>@(loan.Customer?.Name ?? "-")</td>
+                        <td><span class="badge bg-info text-dark">@loan.LoanType</span></td>
+                        <td class="fw-semibold">@loan.LoanAmount.ToString("C")</td>
+                        <td>@loan.InterestRate%</td>
+                        <td>@loan.Tenure yr@(loan.Tenure != 1 ? "s" : "")</td>
+                        <td class="fw-semibold text-success">@loan.MonthlyEMI.ToString("C")</td>
+                        <td>
+                            <span class="badge @(loan.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPROVED ? "bg-success" : loan.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.REJECTED ? "bg-danger" : "bg-secondary")">
+                                @loan.LoanStatus
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@loan.LoanId" class="btn btn-sm btn-outline-primary">Details</a>
+                            @if ((sessionRole == "Admin" || sessionRole == "LoanOfficer") && loan.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPLIED)
+                            {
+                                <a asp-action="Approve" asp-route-id="@loan.LoanId" class="btn btn-sm btn-outline-success">Review</a>
+                            }
+                            @if (loan.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPROVED)
+                            {
+                                <a asp-controller="Repayment" asp-action="Index" asp-route-loanId="@loan.LoanId" class="btn btn-sm btn-outline-info">Repayments</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

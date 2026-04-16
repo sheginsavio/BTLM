@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Interest Calculation";
+    var loan = ViewBag.Loan as MVC_BANK_FINAL_C.Models.Entities.Loan;
+    decimal interest = ViewBag.Interest;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Interest Calculation</h2>
+    <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-secondary">Back to Loans</a>
+</div>
+
+@if (loan != null)
+{
+    <div class="card shadow-sm" style="max-width: 500px;">
+        <div class="card-header bg-warning fw-semibold">Simple Interest — Loan #@loan.LoanId</div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-5">Customer</dt>
+                <dd class="col-sm-7">@(loan.Customer?.Name ?? "-")</dd>
+                <dt class="col-sm-5">Principal (P)</dt>
+                <dd class="col-sm-7 fw-semibold">@loan.LoanAmount.ToString("C")</dd>
+                <dt class="col-sm-5">Rate (R)</dt>
+                <dd class="col-sm-7">@loan.InterestRate%</dd>
+                <dt class="col-sm-5">Time (T)</dt>
+                <dd class="col-sm-7">1 Year</dd>
+                <dt class="col-sm-5">Formula</dt>
+                <dd class="col-sm-7"><code>P × R × T / 100</code></dd>
+            </dl>
+            <hr />
+            <div class="alert alert-success mb-0">
+                <strong>Simple Interest = </strong>
+                <span class="fs-5 fw-bold">@interest.ToString("C")</span>
+            </div>
+        </div>
+        <div class="card-footer d-flex gap-2">
+            <a asp-action="Record" asp-route-loanId="@loan.LoanId" class="btn btn-success btn-sm">Record Repayment</a>
+            <a asp-action="Index" asp-route-loanId="@loan.LoanId" class="btn btn-outline-info btn-sm">Repayment History</a>
+        </div>
+    </div>
+}

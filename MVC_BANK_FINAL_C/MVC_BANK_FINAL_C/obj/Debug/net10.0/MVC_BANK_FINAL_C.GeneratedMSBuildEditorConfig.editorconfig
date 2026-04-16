@@ -1,0 +1,151 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = MVC_BANK_FINAL_C
+build_property.RootNamespace = MVC_BANK_FINAL_C
+build_property.ProjectDir = C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Account/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/LogoutSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dvdXRTdWNjZXNzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Customer/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Customer/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Customer/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Customer/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Loan/Apply.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxBcHBseS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Loan/Approve.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxBcHByb3ZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Loan/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Loan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Repayment/CustomerRepay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXltZW50XEN1c3RvbWVyUmVwYXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Repayment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXltZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Repayment/Interest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXltZW50XEludGVyZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Repayment/Record.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXltZW50XFJlY29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Report/AuditLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEF1ZGl0TG9ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Report/Transactions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFRyYW5zYWN0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Shared/_AuthLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BdXRoTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Transaction/Deposit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cRGVwb3NpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Transaction/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Transaction/Transfer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cVHJhbnNmZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Transaction/Withdraw.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cV2l0aGRyYXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-bzte0l2o9q

@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\models\\viewmodels\\accountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\models\\viewmodels\\accountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\data\\bankingdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\data\\bankingdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CustomerService.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
+              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
+              "RelativeToolTip": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T06:21:43.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T06:21:28.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountViewModel.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
+              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
+              "RelativeToolTip": "MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T03:02:43.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BankingDbContext.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
+              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
+              "RelativeToolTip": "MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T03:02:09.794Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

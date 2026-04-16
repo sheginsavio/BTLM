@@ -1,0 +1,63 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="card auth-card" style="max-width:500px;">
+    <div class="card-body p-4">
+        <h4 class="card-title fw-bold text-center mb-1">Create Account</h4>
+        <p class="text-center text-muted small mb-4">Register as a new customer</p>
+
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small"></div>
+
+            <div class="row g-3">
+                <div class="col-12">
+                    <label asp-for="Name" class="form-label fw-semibold"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Full name" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Email" class="form-label fw-semibold"></label>
+                    <input asp-for="Email" class="form-control" placeholder="email@example.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ContactInfo" class="form-label fw-semibold"></label>
+                    <input asp-for="ContactInfo" class="form-control" placeholder="Phone or address" />
+                    <span asp-validation-for="ContactInfo" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Username" class="form-label fw-semibold"></label>
+                    <input asp-for="Username" class="form-control" placeholder="Choose a username" autocomplete="username" />
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label fw-semibold"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Password" autocomplete="new-password" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ConfirmPassword" class="form-label fw-semibold"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm" autocomplete="new-password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-grid mt-4 mb-3">
+                <button type="submit" class="btn btn-success btn-lg fw-semibold">Register</button>
+            </div>
+        </form>
+
+        <p class="text-center mb-0 small">
+            Already have an account?
+            <a asp-controller="Auth" asp-action="Login" class="fw-semibold">Sign in</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

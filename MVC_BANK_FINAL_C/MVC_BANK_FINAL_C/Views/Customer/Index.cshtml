@@ -1,0 +1,46 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Customer>
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Customers</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Customer</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact Info</th>
+                    <th>Accounts</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">No customers found.</td></tr>
+                }
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@customer.CustomerId</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Email</td>
+                        <td>@(customer.ContactInfo ?? "-")</td>
+                        <td><span class="badge bg-info">@customer.Accounts.Count</span></td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@customer.CustomerId" class="btn btn-sm btn-outline-primary">Details</a>
+                            <a asp-action="Edit" asp-route-id="@customer.CustomerId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.AccountViewModel
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-5" style="max-width:500px;">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0"><i class="bi bi-bank me-2"></i>Create New Account</h5>
+                </div>
+                <div class="card-body p-4">
+
+                    @if (ViewData.ModelState.ErrorCount > 0)
+                    {
+                        <div class="alert alert-danger py-2">
+                            <div asp-validation-summary="ModelOnly"></div>
+                        </div>
+                    }
+
+                    <!-- Display-only: customer context -->
+                    <div class="mb-3">
+                        <p class="mb-0 text-muted small fw-semibold text-uppercase">Creating account for</p>
+                        <p class="fs-5 fw-bold mb-0">@Model.CustomerName</p>
+                    </div>
+
+                    <hr class="my-3" />
+
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="CustomerId" />
+                        <input type="hidden" asp-for="CustomerName" />
+
+                        <!-- Account Type -->
+                        <div class="mb-3">
+                            <label asp-for="AccountType" class="form-label fw-semibold">Account Type</label>
+                            <select asp-for="AccountType" class="form-select"
+                                    asp-items="Html.GetEnumSelectList<MVC_BANK_FINAL_C.Data.AccountType>()">
+                                <option value="">-- Select Type --</option>
+                            </select>
+                            <span asp-validation-for="AccountType" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Opening Balance -->
+                        <div class="mb-3">
+                            <label asp-for="InitialBalance" class="form-label fw-semibold">Opening Balance</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="InitialBalance" class="form-control" type="number"
+                                       step="0.01" min="0" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="InitialBalance" class="text-danger small"></span>
+                            <div class="form-text text-muted">Leave as 0 if no opening deposit.</div>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-check-circle me-1"></i>Create Account
+                            </button>
+                            <a asp-controller="Customer" asp-action="Details"
+                               asp-route-id="@Model.CustomerId"
+                               class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

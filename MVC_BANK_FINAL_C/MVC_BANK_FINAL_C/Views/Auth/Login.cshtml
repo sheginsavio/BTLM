@@ -1,0 +1,51 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="card auth-card">
+    <div class="card-body p-4">
+        <h4 class="card-title fw-bold text-center mb-1">Welcome Back</h4>
+        <p class="text-center text-muted small mb-4">Sign in to your account</p>
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small"></div>
+
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label fw-semibold"></label>
+                <input asp-for="Username" class="form-control form-control-lg" placeholder="Enter username" autocomplete="username" />
+                <span asp-validation-for="Username" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Password" class="form-label fw-semibold"></label>
+                <input asp-for="Password" class="form-control form-control-lg" placeholder="Enter password" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg fw-semibold">Sign In</button>
+            </div>
+        </form>
+
+        <hr />
+        <p class="text-center mb-0 small">
+            New customer?
+            <a asp-controller="Auth" asp-action="Register" class="fw-semibold">Create an account</a>
+        </p>
+
+        <div class="mt-3 p-3 bg-light rounded small text-muted">
+            <strong>Demo credentials:</strong><br />
+            Admin: admin / admin123<br />
+            Teller: teller1 / teller123<br />
+            LoanOfficer: loanofficer1 / loan123<br />
+            Auditor: auditor1 / audit123
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

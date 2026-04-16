@@ -1,0 +1,366 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.TransactionViewModel
+@{
+    ViewData["Title"] = "Transfer Funds";
+    bool isCustomer = ViewBag.ShowCustomerSearch == false;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7" style="max-width:700px;">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info py-3">
+                    <h4 class="mb-0"><i class="bi bi-arrow-left-right me-2"></i>Transfer Funds</h4>
+                </div>
+                <div class="card-body p-4">
+
+                    @if (ViewData.ModelState.ErrorCount > 0)
+                    {
+                        <div class="alert alert-danger py-2">
+                            <div asp-validation-summary="ModelOnly"></div>
+                        </div>
+                    }
+
+                    <form asp-action="Transfer" method="post" id="transferForm">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="TransactionType" />
+                        <input type="hidden" asp-for="PerformedBy" />
+                        <!-- Hidden fields that JS will populate -->
+                        <input type="hidden" asp-for="TransferType" id="hiddenTransferType" />
+                        <input type="hidden" asp-for="ToAccountId"  id="hiddenToAccountId" />
+
+                        @if (!isCustomer)
+                        {
+                            <!-- ══ SECTION A: Admin / Teller ══════════════════════════════ -->
+
+                            <!-- FROM: customer search → account dropdown -->
+                            <h6 class="text-muted text-uppercase small fw-bold mb-2">From</h6>
+                            <div class="mb-3 position-relative">
+                                <label class="form-label fw-semibold">Search Customer</label>
+                                <input type="text" id="fromCustomerSearch" class="form-control"
+                                       placeholder="Type customer name or email…" autocomplete="off" />
+                                <ul id="fromCustomerSuggestions"
+                                    class="list-group position-absolute z-3"
+                                    style="width:100%;max-height:200px;overflow-y:auto;display:none;top:100%;left:0;"></ul>
+                            </div>
+
+                            <div class="mb-4" id="fromAccountSection" style="display:none;">
+                                <label class="form-label fw-semibold">Source Account</label>
+                                <select id="fromAccountSelect" asp-for="AccountId" class="form-select">
+                                    <option value="">-- Select Account --</option>
+                                </select>
+                                <span asp-validation-for="AccountId" class="text-danger small"></span>
+                            </div>
+
+                            <hr />
+
+                            <!-- TO: account number input + Verify button -->
+                            <h6 class="text-muted text-uppercase small fw-bold mb-2">To</h6>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Destination Account ID</label>
+                                <div class="input-group">
+                                    <input type="number" id="toAccountInput" class="form-control"
+                                           min="1" placeholder="Enter destination account ID" />
+                                    <button type="button" id="verifyBtn" class="btn btn-outline-info">
+                                        <i class="bi bi-search me-1"></i>Verify
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="verifiedInfo" class="alert alert-success py-2 small" style="display:none;"></div>
+                            <div id="verifyError"  class="alert alert-danger  py-2 small" style="display:none;"></div>
+                        }
+                        else
+                        {
+                            <!-- ══ SECTION B: Customer ════════════════════════════════════ -->
+
+                            <!-- FROM: own-account dropdown -->
+                            <h6 class="text-muted text-uppercase small fw-bold mb-2">From</h6>
+                            <div class="mb-3">
+                                <label asp-for="AccountId" class="form-label fw-semibold">Your Source Account</label>
+                                <select asp-for="AccountId" asp-items="Model.FromAccountList" class="form-select" id="fromAccountSelectCustomer">
+                                    <option value="">-- Select Account --</option>
+                                </select>
+                                <span asp-validation-for="AccountId" class="text-danger small"></span>
+                            </div>
+
+                            <hr />
+
+                            <!-- Transfer type radio -->
+                            <h6 class="text-muted text-uppercase small fw-bold mb-2">To</h6>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Transfer To</label>
+                                <div class="d-flex gap-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="transferTypeRadio"
+                                               id="radioOwn" value="own" checked />
+                                        <label class="form-check-label" for="radioOwn">My Own Account</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="transferTypeRadio"
+                                               id="radioExternal" value="external" />
+                                        <label class="form-check-label" for="radioExternal">Another Customer's Account</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Own-to-own: dropdown of own accounts (filtered by JS to exclude source) -->
+                            <div id="ownToSection" class="mb-3">
+                                <label class="form-label fw-semibold">Destination Account</label>
+                                <select id="ownToSelect" class="form-select">
+                                    <option value="">-- Select Account --</option>
+                                    @foreach (var item in Model.ToAccountList)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <!-- External: account number + verify -->
+                            <div id="externalToSection" class="mb-3" style="display:none;">
+                                <label class="form-label fw-semibold">Destination Account ID</label>
+                                <div class="input-group">
+                                    <input type="number" id="toAccountInput" class="form-control"
+                                           min="1" placeholder="Enter destination account ID" />
+                                    <button type="button" id="verifyBtn" class="btn btn-outline-info">
+                                        <i class="bi bi-search me-1"></i>Verify
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="verifiedInfo" class="alert alert-success py-2 small" style="display:none;"></div>
+                            <div id="verifyError"  class="alert alert-danger  py-2 small" style="display:none;"></div>
+                        }
+
+                        <hr />
+
+                        <!-- Amount (shared) -->
+                        <div class="mb-3">
+                            <label asp-for="Amount" class="form-label fw-semibold">Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Amount" class="form-control" type="number"
+                                       step="0.01" min="0.01" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="Amount" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" id="transferSubmitBtn" class="btn btn-info px-4"
+                                    @(isCustomer ? "" : "disabled")>
+                                <i class="bi bi-arrow-left-right me-1"></i>Transfer
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (!isCustomer)
+{
+    <!-- Admin / Teller JS -->
+    <script>
+    (function () {
+        const fromSearch     = document.getElementById('fromCustomerSearch');
+        const fromSuggestions= document.getElementById('fromCustomerSuggestions');
+        const fromSection    = document.getElementById('fromAccountSection');
+        const fromSelect     = document.getElementById('fromAccountSelect');
+        const toInput        = document.getElementById('toAccountInput');
+        const verifyBtn      = document.getElementById('verifyBtn');
+        const verifiedInfo   = document.getElementById('verifiedInfo');
+        const verifyError    = document.getElementById('verifyError');
+        const hiddenTo       = document.getElementById('hiddenToAccountId');
+        const hiddenType     = document.getElementById('hiddenTransferType');
+        const submitBtn      = document.getElementById('transferSubmitBtn');
+
+        hiddenType.value = 'external';   // Admin/Teller always external-style
+
+        let debounce;
+        fromSearch.addEventListener('input', function () {
+            clearTimeout(debounce);
+            const term = this.value.trim();
+            if (term.length < 2) { fromSuggestions.style.display = 'none'; return; }
+            debounce = setTimeout(() => fetchCustomers(term), 300);
+        });
+
+        function fetchCustomers(term) {
+            fetch('/Customer/SearchCustomer?term=' + encodeURIComponent(term))
+                .then(r => r.json())
+                .then(data => {
+                    fromSuggestions.innerHTML = '';
+                    if (!data || data.length === 0) { fromSuggestions.style.display = 'none'; return; }
+                    data.forEach(c => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item list-group-item-action';
+                        li.textContent = c.name + ' — ' + c.email;
+                        li.addEventListener('click', () => {
+                            fromSearch.value = c.name + ' (' + c.email + ')';
+                            fromSuggestions.style.display = 'none';
+                            loadFromAccounts(c.customerId);
+                        });
+                        fromSuggestions.appendChild(li);
+                    });
+                    fromSuggestions.style.display = 'block';
+                });
+        }
+
+        function loadFromAccounts(customerId) {
+            fetch('/Transaction/GetCustomerAccounts?customerId=' + customerId)
+                .then(r => r.json())
+                .then(data => {
+                    fromSelect.innerHTML = '<option value="">-- Select Account --</option>';
+                    if (data.success && data.accounts) {
+                        data.accounts.forEach(a => {
+                            const opt = document.createElement('option');
+                            opt.value = a.accountId; opt.textContent = a.label;
+                            fromSelect.appendChild(opt);
+                        });
+                        fromSection.style.display = 'block';
+                    }
+                });
+        }
+
+        verifyBtn.addEventListener('click', function () {
+            const accId = parseInt(toInput.value);
+            if (!accId || accId <= 0) {
+                showError('Please enter a valid account ID.');
+                return;
+            }
+            fetch('/Transaction/VerifyAccount?accountId=' + accId)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        verifiedInfo.textContent =
+                            '✔ Account #' + accId + ' — ' + data.accountHolder +
+                            ' (' + data.accountType + ') | Balance: $' + data.balance.toFixed(2);
+                        verifiedInfo.style.display = 'block';
+                        verifyError.style.display  = 'none';
+                        hiddenTo.value   = accId;
+                        submitBtn.disabled = false;
+                    } else {
+                        showError(data.message || 'Account not found.');
+                    }
+                })
+                .catch(() => showError('Verification failed.'));
+        });
+
+        function showError(msg) {
+            verifyError.textContent   = msg;
+            verifyError.style.display = 'block';
+            verifiedInfo.style.display= 'none';
+            hiddenTo.value   = '';
+            submitBtn.disabled = true;
+        }
+
+        document.addEventListener('click', function (e) {
+            if (!fromSuggestions.contains(e.target) && e.target !== fromSearch)
+                fromSuggestions.style.display = 'none';
+        });
+    })();
+    </script>
+}
+else
+{
+    <!-- Customer JS -->
+    <script>
+    (function () {
+        const radioOwn       = document.getElementById('radioOwn');
+        const radioExternal  = document.getElementById('radioExternal');
+        const ownSection     = document.getElementById('ownToSection');
+        const extSection     = document.getElementById('externalToSection');
+        const ownSelect      = document.getElementById('ownToSelect');
+        const fromSelect     = document.getElementById('fromAccountSelectCustomer');
+        const toInput        = document.getElementById('toAccountInput');
+        const verifyBtn      = document.getElementById('verifyBtn');
+        const verifiedInfo   = document.getElementById('verifiedInfo');
+        const verifyError    = document.getElementById('verifyError');
+        const hiddenTo       = document.getElementById('hiddenToAccountId');
+        const hiddenType     = document.getElementById('hiddenTransferType');
+        const submitBtn      = document.getElementById('transferSubmitBtn');
+
+        // Initialise hidden type and enable submit (own-to-own needs no verify)
+        hiddenType.value   = 'own';
+        submitBtn.disabled = false;
+
+        // When source account changes, remove it from own destination list
+        fromSelect.addEventListener('change', function () {
+            const selectedVal = this.value;
+            Array.from(ownSelect.options).forEach(opt => {
+                opt.disabled = (opt.value === selectedVal && opt.value !== '');
+            });
+            // If currently selected dest == new source, reset dest
+            if (ownSelect.value === selectedVal) ownSelect.value = '';
+            syncOwnDest();
+        });
+
+        ownSelect.addEventListener('change', syncOwnDest);
+
+        function syncOwnDest() {
+            if (hiddenType.value === 'own') {
+                hiddenTo.value = ownSelect.value || '';
+            }
+        }
+
+        // Initialise own dest sync
+        syncOwnDest();
+
+        radioOwn.addEventListener('change', function () {
+            hiddenType.value       = 'own';
+            ownSection.style.display  = 'block';
+            extSection.style.display  = 'none';
+            verifiedInfo.style.display= 'none';
+            verifyError.style.display = 'none';
+            hiddenTo.value         = ownSelect.value || '';
+            submitBtn.disabled     = false;
+        });
+
+        radioExternal.addEventListener('change', function () {
+            hiddenType.value       = 'external';
+            ownSection.style.display  = 'none';
+            extSection.style.display  = 'block';
+            hiddenTo.value         = '';
+            submitBtn.disabled     = true;   // must verify first
+        });
+
+        if (verifyBtn) {
+            verifyBtn.addEventListener('click', function () {
+                const accId = parseInt(toInput.value);
+                if (!accId || accId <= 0) { showError('Please enter a valid account ID.'); return; }
+                fetch('/Transaction/VerifyAccount?accountId=' + accId)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            verifiedInfo.textContent =
+                                '✔ Account #' + accId + ' — ' + data.accountHolder +
+                                ' (' + data.accountType + ')';
+                            verifiedInfo.style.display = 'block';
+                            verifyError.style.display  = 'none';
+                            hiddenTo.value   = accId;
+                            submitBtn.disabled = false;
+                        } else {
+                            showError(data.message || 'Account not found.');
+                        }
+                    })
+                    .catch(() => showError('Verification failed.'));
+            });
+        }
+
+        function showError(msg) {
+            verifyError.textContent    = msg;
+            verifyError.style.display  = 'block';
+            verifiedInfo.style.display = 'none';
+            hiddenTo.value    = '';
+            submitBtn.disabled = true;
+        }
+    })();
+    </script>
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

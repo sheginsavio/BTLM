@@ -1,0 +1,340 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    string role = ViewBag.Role ?? "Admin";
+}
+
+<h2 class="mb-4 fw-bold">Dashboard
+    <small class="fs-6 fw-normal text-muted ms-2">— @role view</small>
+</h2>
+
+@* ══════════════ ADMIN ══════════════ *@
+@if (role == "Admin")
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#0d6efd;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Customers</div>
+                    <div class="fs-2 fw-bold text-primary">@Model.TotalCustomers</div>
+                    <a asp-controller="Customer" asp-action="Index" class="btn btn-sm btn-outline-primary mt-2">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#198754;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Transactions</div>
+                    <div class="fs-2 fw-bold text-success">@Model.TotalTransactions</div>
+                    <a asp-controller="Transaction" asp-action="Index" class="btn btn-sm btn-outline-success mt-2">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#fd7e14;">
+                <div class="card-body">
+                    <div class="text-muted small">Active Loans</div>
+                    <div class="fs-2 fw-bold text-warning">@Model.ActiveLoans</div>
+                    <a asp-controller="Loan" asp-action="Index" class="btn btn-sm btn-outline-warning mt-2">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#6f42c1;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Users</div>
+                    <div class="fs-2 fw-bold text-purple" style="color:#6f42c1;">@Model.TotalUsers</div>
+                    <span class="badge bg-secondary mt-2">System Users</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white fw-semibold">Quick Actions</div>
+                <div class="card-body d-grid gap-2">
+                    <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-primary">+ New Customer</a>
+                    <a asp-controller="Transaction" asp-action="Deposit" class="btn btn-outline-success">Deposit Funds</a>
+                    <a asp-controller="Transaction" asp-action="Withdraw" class="btn btn-outline-warning">Withdraw Funds</a>
+                    <a asp-controller="Transaction" asp-action="Transfer" class="btn btn-outline-info">Transfer Funds</a>
+                    <a asp-controller="Loan" asp-action="Apply" class="btn btn-outline-secondary">Apply for Loan</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white fw-semibold">Reports & Audit</div>
+                <div class="card-body d-grid gap-2">
+                    <a asp-controller="Report" asp-action="Transactions" class="btn btn-outline-dark">Transaction Report</a>
+                    <a asp-controller="Report" asp-action="AuditLogs" class="btn btn-outline-dark">Audit Logs</a>
+                    <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-dark">Loan Overview</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* ══════════════ TELLER ══════════════ *@
+@if (role == "Teller")
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm" style="border-left-color:#198754;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Transactions</div>
+                    <div class="fs-2 fw-bold text-success">@Model.TotalTransactions</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-success text-white text-center py-3">
+                <a asp-controller="Transaction" asp-action="Deposit" class="text-white text-decoration-none">
+                    <div class="fs-1">&#128176;</div><div class="fw-semibold">Deposit</div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-warning text-dark text-center py-3">
+                <a asp-controller="Transaction" asp-action="Withdraw" class="text-dark text-decoration-none">
+                    <div class="fs-1">&#128184;</div><div class="fw-semibold">Withdraw</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white fw-semibold">Recent Deposits</div>
+                <div class="card-body p-0">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light"><tr><th>Account</th><th>Customer</th><th>Amount</th><th>Date</th></tr></thead>
+                        <tbody>
+                            @foreach (var t in Model.RecentDeposits)
+                            {
+                                <tr>
+                                    <td>@t.AccountId</td>
+                                    <td>@(t.Account?.Customer?.Name ?? "-")</td>
+                                    <td class="text-success fw-semibold">@t.Amount.ToString("C")</td>
+                                    <td class="small">@t.TransactionDate.ToString("dd MMM HH:mm")</td>
+                                </tr>
+                            }
+                            @if (!Model.RecentDeposits.Any())
+                            {
+                                <tr><td colspan="4" class="text-center text-muted py-3">No deposits yet.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning fw-semibold">Recent Withdrawals</div>
+                <div class="card-body p-0">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light"><tr><th>Account</th><th>Customer</th><th>Amount</th><th>Date</th></tr></thead>
+                        <tbody>
+                            @foreach (var t in Model.RecentWithdrawals)
+                            {
+                                <tr>
+                                    <td>@t.AccountId</td>
+                                    <td>@(t.Account?.Customer?.Name ?? "-")</td>
+                                    <td class="text-warning fw-semibold">@t.Amount.ToString("C")</td>
+                                    <td class="small">@t.TransactionDate.ToString("dd MMM HH:mm")</td>
+                                </tr>
+                            }
+                            @if (!Model.RecentWithdrawals.Any())
+                            {
+                                <tr><td colspan="4" class="text-center text-muted py-3">No withdrawals yet.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* ══════════════ LOAN OFFICER ══════════════ *@
+@if (role == "LoanOfficer")
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#6c757d;">
+                <div class="card-body">
+                    <div class="text-muted small">Pending</div>
+                    <div class="fs-2 fw-bold text-secondary">@Model.PendingLoans</div>
+                    <span class="badge bg-secondary">Awaiting Review</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#198754;">
+                <div class="card-body">
+                    <div class="text-muted small">Approved</div>
+                    <div class="fs-2 fw-bold text-success">@Model.ApprovedLoans</div>
+                    <span class="badge bg-success">Active</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#dc3545;">
+                <div class="card-body">
+                    <div class="text-muted small">Rejected</div>
+                    <div class="fs-2 fw-bold text-danger">@Model.RejectedLoans</div>
+                    <span class="badge bg-danger">Closed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white fw-semibold">Recent Loan Applications</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark"><tr><th>#</th><th>Customer</th><th>Type</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                    @foreach (var l in Model.RecentLoans)
+                    {
+                        <tr>
+                            <td>@l.LoanId</td>
+                            <td>@(l.Customer?.Name ?? "-")</td>
+                            <td>@l.LoanType</td>
+                            <td class="fw-semibold">@l.LoanAmount.ToString("C")</td>
+                            <td>
+                                <span class="badge @(l.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPROVED ? "bg-success" : l.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.REJECTED ? "bg-danger" : "bg-secondary")">
+                                    @l.LoanStatus
+                                </span>
+                            </td>
+                            <td>
+                                @if (l.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPLIED)
+                                {
+                                    <a asp-controller="Loan" asp-action="Approve" asp-route-id="@l.LoanId" class="btn btn-sm btn-outline-primary">Review</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.RecentLoans.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-3">No loans found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@* ══════════════ AUDITOR ══════════════ *@
+@if (role == "Auditor")
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm" style="border-left-color:#198754;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Transactions</div>
+                    <div class="fs-2 fw-bold text-success">@Model.TotalTransactions</div>
+                    <a asp-controller="Report" asp-action="Transactions" class="btn btn-sm btn-outline-success mt-2">Full Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white fw-semibold">Recent Audit Logs</div>
+        <div class="card-body p-0">
+            <table class="table table-sm table-hover mb-0">
+                <thead class="table-dark"><tr><th>#</th><th>Action</th><th>Performed By</th><th>Date</th></tr></thead>
+                <tbody>
+                    @foreach (var log in Model.RecentAuditLogs)
+                    {
+                        <tr>
+                            <td>@log.LogId</td>
+                            <td>@log.ActionPerformed</td>
+                            <td><span class="badge bg-secondary">@log.PerformedBy</span></td>
+                            <td class="small">@log.LogDate.ToString("dd MMM yyyy HH:mm")</td>
+                        </tr>
+                    }
+                    @if (!Model.RecentAuditLogs.Any())
+                    {
+                        <tr><td colspan="4" class="text-center text-muted py-3">No audit logs.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@* ══════════════ CUSTOMER ══════════════ *@
+@if (role == "Customer")
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card card-stat shadow-sm h-100" style="border-left-color:#0d6efd;">
+                <div class="card-body">
+                    <div class="text-muted small">Total Balance</div>
+                    <div class="fs-2 fw-bold text-primary">@Model.OwnBalance.ToString("C")</div>
+                    <a asp-controller="Transaction" asp-action="Index" class="btn btn-sm btn-outline-primary mt-2">My Transactions</a>
+                </div>
+            </div>
+        </div>
+        @if (Model.OwnActiveLoan != null)
+        {
+            <div class="col-md-4">
+                <div class="card card-stat shadow-sm h-100" style="border-left-color:#198754;">
+                    <div class="card-body">
+                        <div class="text-muted small">Active Loan — @Model.OwnActiveLoan.LoanType</div>
+                        <div class="fs-4 fw-bold text-success">@Model.OwnActiveLoan.LoanAmount.ToString("C")</div>
+                        <div class="small text-muted">Monthly EMI: <strong class="text-dark">@Model.OwnActiveLoan.MonthlyEMI.ToString("C")</strong></div>
+                        <span class="badge bg-success mt-1">APPROVED</span>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="text-muted mb-2">No active loan</div>
+                        <a asp-controller="Loan" asp-action="Apply" class="btn btn-outline-primary btn-sm">Apply for Loan</a>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-grid gap-2">
+                    <a asp-controller="Loan" asp-action="Apply" class="btn btn-primary">Apply for Loan</a>
+                    <a asp-controller="Loan" asp-action="Index" class="btn btn-outline-secondary">My Loans</a>
+                    <a asp-controller="Transaction" asp-action="Index" class="btn btn-outline-secondary">Transaction History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white fw-semibold">Recent Transactions</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light"><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
+                <tbody>
+                    @foreach (var t in Model.OwnRecentTransactions)
+                    {
+                        <tr>
+                            <td class="small">@t.TransactionDate.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge @(t.TransactionType == MVC_BANK_FINAL_C.Data.TransactionType.DEPOSIT ? "bg-success" : t.TransactionType == MVC_BANK_FINAL_C.Data.TransactionType.WITHDRAWAL ? "bg-warning text-dark" : "bg-info text-dark")">
+                                    @t.TransactionType
+                                </span>
+                            </td>
+                            <td class="fw-semibold">@t.Amount.ToString("C")</td>
+                        </tr>
+                    }
+                    @if (!Model.OwnRecentTransactions.Any())
+                    {
+                        <tr><td colspan="3" class="text-center text-muted py-3">No transactions yet.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

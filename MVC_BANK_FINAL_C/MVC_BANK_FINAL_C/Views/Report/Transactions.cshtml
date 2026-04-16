@@ -1,0 +1,72 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Transaction>
+@{
+    ViewData["Title"] = "Transaction Report";
+    DateTime? from = ViewBag.From;
+    DateTime? to = ViewBag.To;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Transaction Report</h2>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white fw-semibold">Date Filter</div>
+    <div class="card-body">
+        <form method="get" asp-action="Transactions" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">From Date</label>
+                <input type="date" name="from" class="form-control" value="@(from?.ToString("yyyy-MM-dd"))" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">To Date</label>
+                <input type="date" name="to" class="form-control" value="@(to?.ToString("yyyy-MM-dd"))" />
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a asp-action="Transactions" class="btn btn-outline-secondary">Reset</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+        <span class="fw-semibold">Results</span>
+        <span class="badge bg-secondary">@Model.Count() records</span>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Account ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">No transactions found for the selected period.</td></tr>
+                }
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td>@t.TransactionId</td>
+                        <td>@t.AccountId</td>
+                        <td>@(t.Account?.Customer?.Name ?? "-")</td>
+                        <td>
+                            <span class="badge @(t.TransactionType == MVC_BANK_FINAL_C.Data.TransactionType.DEPOSIT ? "bg-success" : t.TransactionType == MVC_BANK_FINAL_C.Data.TransactionType.WITHDRAWAL ? "bg-warning text-dark" : "bg-info text-dark")">
+                                @t.TransactionType
+                            </span>
+                        </td>
+                        <td class="fw-semibold">@t.Amount.ToString("C")</td>
+                        <td>@t.TransactionDate.ToString("dd MMM yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
