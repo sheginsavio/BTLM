@@ -42,6 +42,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStatusCodePagesWithReExecute("/Error/NotFound");
+
 // Session must come before routing
 app.UseSession();
 

@@ -15,6 +15,10 @@ namespace MVC_BANK_FINAL_C.Filters
 
             if (hasAllowAnonymous) return;
 
+            // Allow the ErrorController (404 page) without requiring a session
+            var controllerName = context.RouteData.Values["controller"]?.ToString();
+            if (controllerName == "Error") return;
+
             // Check session for a logged-in user
             var userId = context.HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(userId))
