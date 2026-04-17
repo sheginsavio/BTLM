@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC_BANK_FINAL_C.Data;
 
 namespace MVC_BANK_FINAL_C.Models.ViewModels
@@ -33,5 +34,11 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
 
         [Display(Name = "Loan Status")]
         public LoanStatus LoanStatus { get; set; } = LoanStatus.APPLIED;
+
+        [Display(Name = "Account to Receive Loan Amount")]
+        public int? CreditAccountId { get; set; }
+
+        /// <summary>Pre-populated dropdown of the customer's own accounts (Customer role only).</summary>
+        public List<SelectListItem> AccountList { get; set; } = new();
     }
 }

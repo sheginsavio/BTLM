@@ -26,9 +26,10 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
 
                 if (loan == null) return null;
 
-                // Determine current balance remaining
+                // Determine current balance remaining (principal + interest)
                 var lastRepayment = loan.Repayments.OrderByDescending(r => r.RepaymentDate).FirstOrDefault();
-                decimal currentBalance = lastRepayment?.BalanceRemaining ?? loan.LoanAmount;
+                decimal totalRepayable = GetTotalRepayable(loan);
+                decimal currentBalance = lastRepayment?.BalanceRemaining ?? totalRepayable;
 
                 if (vm.AmountPaid > currentBalance) return null;
 
@@ -65,11 +66,12 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
                 // Only APPROVED loans can be repaid
                 if (loan.LoanStatus != LoanStatus.APPROVED) return null;
 
-                // Calculate current balance remaining
+                // Calculate current balance remaining (principal + interest)
                 var lastRepayment = loan.Repayments
                     .OrderByDescending(r => r.RepaymentDate)
                     .FirstOrDefault();
-                decimal currentBalance = lastRepayment?.BalanceRemaining ?? loan.LoanAmount;
+                decimal totalRepayable = GetTotalRepayable(loan);
+                decimal currentBalance = lastRepayment?.BalanceRemaining ?? totalRepayable;
 
                 // Validation 1: amount must not exceed loan balance remaining
                 if (vm.AmountPaid > currentBalance) return null;
@@ -106,6 +108,17 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
             {
                 return null;
             }
+        }
+
+        // ── Private helpers ───────────────────────────────────────────────────
+
+        /// <summary>
+        /// Returns the total amount a customer must repay:
+        /// Principal + Simple Interest (P × R × T / 100).
+        /// </summary>
+        private static decimal GetTotalRepayable(Loan loan)
+        {
+            return loan.LoanAmount + (loan.LoanAmount * loan.InterestRate * loan.Tenure / 100m);
         }
 
         // ── Interest calculation ──────────────────────────────────────────────

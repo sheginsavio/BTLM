@@ -131,10 +131,11 @@ namespace MVC_BANK_FINAL_C.Controllers
                 return RedirectToAction(nameof(Index), new { loanId });
             }
 
-            // Calculate current balance remaining
+            // Calculate current balance remaining (principal + interest)
             var repayments    = await _repaymentService.GetRepaymentHistory(loanId);
             var lastRepayment = repayments.OrderByDescending(r => r.RepaymentDate).FirstOrDefault();
-            decimal balanceRemaining = lastRepayment?.BalanceRemaining ?? loan.LoanAmount;
+            decimal totalRepayable   = loan.LoanAmount + (loan.LoanAmount * loan.InterestRate * loan.Tenure / 100m);
+            decimal balanceRemaining = lastRepayment?.BalanceRemaining ?? totalRepayable;
 
             // Guard: fully paid
             if (balanceRemaining <= 0)
@@ -182,10 +183,11 @@ namespace MVC_BANK_FINAL_C.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Recalculate balance remaining (do not trust form post)
+            // Recalculate balance remaining (do not trust form post; use principal + interest)
             var repayments    = await _repaymentService.GetRepaymentHistory(vm.LoanId);
             var lastRepayment = repayments.OrderByDescending(r => r.RepaymentDate).FirstOrDefault();
-            decimal balanceRemaining = lastRepayment?.BalanceRemaining ?? loan.LoanAmount;
+            decimal totalRepayable   = loan.LoanAmount + (loan.LoanAmount * loan.InterestRate * loan.Tenure / 100m);
+            decimal balanceRemaining = lastRepayment?.BalanceRemaining ?? totalRepayable;
             vm.BalanceRemaining = balanceRemaining;
             vm.CustomerName     = HttpContext.Session.GetString("Username") ?? "";
 

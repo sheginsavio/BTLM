@@ -1,7 +1,9 @@
 @model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Loan>
 @{
     ViewData["Title"] = "Loans";
-    var sessionRole = Context.Session.GetString("UserRole") ?? "";
+    var sessionRole  = Context.Session.GetString("UserRole") ?? "";
+    var loanBalances = ViewBag.LoanBalances as Dictionary<int, decimal>
+                       ?? new Dictionary<int, decimal>();
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -56,7 +58,27 @@
                             }
                             @if (loan.LoanStatus == MVC_BANK_FINAL_C.Data.LoanStatus.APPROVED)
                             {
-                                <a asp-controller="Repayment" asp-action="Index" asp-route-loanId="@loan.LoanId" class="btn btn-sm btn-outline-info">Repayments</a>
+                                @if (sessionRole == "Customer")
+                                {
+                                    bool isFullyPaid = loanBalances.ContainsKey(loan.LoanId)
+                                                       && loanBalances[loan.LoanId] == 0;
+                                    @if (!isFullyPaid)
+                                    {
+                                        <a asp-controller="Repayment" asp-action="Index"
+                                           asp-route-loanId="@loan.LoanId"
+                                           class="btn btn-sm btn-outline-info">Repayments</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">Fully Paid</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <a asp-controller="Repayment" asp-action="Index"
+                                       asp-route-loanId="@loan.LoanId"
+                                       class="btn btn-sm btn-outline-info">Repayments</a>
+                                }
                             }
                         </td>
                     </tr>

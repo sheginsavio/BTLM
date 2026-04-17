@@ -26,32 +26,26 @@
                         </div>
                     }
 
-                    <!-- Loan summary (read-only) -->
-                    @if (loan != null)
-                    {
-                        <div class="card bg-light border-0 mb-4">
-                            <div class="card-body py-3">
-                                <dl class="row mb-0 small">
-                                    <dt class="col-sm-5">Loan #</dt>
-                                    <dd class="col-sm-7">@loan.LoanId</dd>
+                    <!-- Loan summary (read-only) — formula details intentionally hidden -->
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body py-3">
+                            <dl class="row mb-0 small">
+                                <dt class="col-sm-6">Loan #</dt>
+                                <dd class="col-sm-6">@Model.LoanId</dd>
 
-                                    <dt class="col-sm-5">Loan Amount</dt>
-                                    <dd class="col-sm-7 fw-semibold">@loan.LoanAmount.ToString("C")</dd>
+                                <dt class="col-sm-6">Total Amount Due</dt>
+                                <dd class="col-sm-6 fw-bold text-danger fs-6">
+                                    @(Model.BalanceRemaining?.ToString("C") ?? "-")
+                                </dd>
 
-                                    <dt class="col-sm-5">Interest Rate</dt>
-                                    <dd class="col-sm-7">@loan.InterestRate%</dd>
-
-                                    <dt class="col-sm-5">Monthly EMI</dt>
-                                    <dd class="col-sm-7">@loan.MonthlyEMI.ToString("C")</dd>
-
-                                    <dt class="col-sm-5">Balance Remaining</dt>
-                                    <dd class="col-sm-7 fw-bold text-danger fs-6">
-                                        @(Model.BalanceRemaining?.ToString("C") ?? "-")
-                                    </dd>
-                                </dl>
-                            </div>
+                                @if (loan != null)
+                                {
+                                    <dt class="col-sm-6">Suggested Monthly Payment</dt>
+                                    <dd class="col-sm-6 fw-semibold">@loan.MonthlyEMI.ToString("C")</dd>
+                                }
+                            </dl>
                         </div>
-                    }
+                    </div>
 
                     <form asp-action="CustomerRepay" method="post">
                         @Html.AntiForgeryToken()

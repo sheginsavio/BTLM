@@ -14,22 +14,44 @@
         <dl class="row mb-4">
             <dt class="col-sm-4">Customer</dt>
             <dd class="col-sm-8">@(Model.Customer?.Name ?? "-")</dd>
+
             <dt class="col-sm-4">Loan Amount</dt>
             <dd class="col-sm-8 fw-semibold">@Model.LoanAmount.ToString("C")</dd>
+
             <dt class="col-sm-4">Interest Rate</dt>
             <dd class="col-sm-8">@Model.InterestRate%</dd>
+
             <dt class="col-sm-4">Current Status</dt>
             <dd class="col-sm-8"><span class="badge bg-secondary">@Model.LoanStatus</span></dd>
+
+            <dt class="col-sm-4">Credit Account</dt>
+            <dd class="col-sm-8">
+                @if (Model.CreditAccountId.HasValue)
+                {
+                    <span class="badge bg-info text-dark">
+                        Account #@Model.CreditAccountId — @Model.CreditAccount?.AccountType
+                    </span>
+                    <small class="text-muted d-block mt-1">
+                        Loan amount will be credited here on approval.
+                    </small>
+                }
+                else
+                {
+                    <span class="text-muted">Not specified</span>
+                }
+            </dd>
         </dl>
 
         <form asp-action="Approve" asp-route-id="@Model.LoanId" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" name="decision" id="decision" value="" />
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-success" onclick="document.getElementById('decision').value='APPROVE'">
+                <button type="submit" class="btn btn-success"
+                        onclick="document.getElementById('decision').value='APPROVE'">
                     Approve Loan
                 </button>
-                <button type="submit" class="btn btn-danger" onclick="document.getElementById('decision').value='REJECT'">
+                <button type="submit" class="btn btn-danger"
+                        onclick="document.getElementById('decision').value='REJECT'">
                     Reject Loan
                 </button>
                 <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>

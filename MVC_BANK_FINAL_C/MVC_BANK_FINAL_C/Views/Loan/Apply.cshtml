@@ -1,9 +1,10 @@
 @model MVC_BANK_FINAL_C.Models.ViewModels.LoanViewModel
 @{
     ViewData["Title"] = "Apply for Loan";
-    var customers  = ViewBag.Customers as IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Customer>;
-    var loanTypes  = ViewBag.LoanTypes as IEnumerable<string> ?? new[] { "Personal","Home","Car","Education","Business" };
-    var tenures    = ViewBag.Tenures   as IEnumerable<int>    ?? new[] { 1,2,3,4,5 };
+    var customers   = ViewBag.Customers  as IEnumerable<MVC_BANK_FINAL_C.Models.Entities.Customer>;
+    var loanTypes   = ViewBag.LoanTypes  as IEnumerable<string> ?? new[] { "Personal","Home","Car","Education","Business" };
+    var tenures     = ViewBag.Tenures    as IEnumerable<int>    ?? new[] { 1,2,3,4,5 };
+    var accountList = ViewBag.AccountList as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
     var sessionRole = Context.Session.GetString("UserRole") ?? "";
 }
 
@@ -22,12 +23,12 @@
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
             }
 
-            @* Customer selector: Admin sees dropdown; Customer sees read-only *@
-            @if (sessionRole == "Admin" && customers != null)
+            @* Customer selector: Admin / LoanOfficer sees dropdown *@
+            @if ((sessionRole == "Admin" || sessionRole == "LoanOfficer") && customers != null)
             {
                 <div class="mb-3">
                     <label asp-for="CustomerId" class="form-label fw-semibold">Customer</label>
-                    <select asp-for="CustomerId" class="form-select">
+                    <select asp-for="CustomerId" class="form-select" id="CustomerIdSelect">
                         <option value="">-- Select Customer --</option>
                         @foreach (var c in customers)
                         {
@@ -35,6 +36,16 @@
                         }
                     </select>
                     <span asp-validation-for="CustomerId" class="text-danger small"></span>
+                </div>
+
+                @* Credit account dropdown for Admin / LoanOfficer (populated by JS) *@
+                <div class="mb-3" id="creditAccountDiv" style="display:none;">
+                    <label class="form-label fw-semibold">Account to Receive Loan Amount</label>
+                    <select name="CreditAccountId" id="CreditAccountId" class="form-select">
+                        <option value="">-- Select Customer First --</option>
+                    </select>
+                    <span asp-validation-for="CreditAccountId" class="text-danger small"></span>
+                    <div class="form-text">Select a customer first to load their accounts.</div>
                 </div>
             }
 
@@ -54,7 +65,8 @@
                 <label asp-for="LoanAmount" class="form-label fw-semibold">Loan Amount</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input asp-for="LoanAmount" class="form-control" type="number" step="0.01" min="1" placeholder="0.00" id="LoanAmount" />
+                    <input asp-for="LoanAmount" class="form-control" type="number"
+                           step="0.01" min="1" placeholder="0.00" id="LoanAmount" />
                 </div>
                 <span asp-validation-for="LoanAmount" class="text-danger small"></span>
             </div>
@@ -70,6 +82,22 @@
                 <span asp-validation-for="Tenure" class="text-danger small"></span>
             </div>
 
+            @* Credit account dropdown for Customer (pre-populated server-side) *@
+            @if (sessionRole == "Customer")
+            {
+                <div class="mb-3">
+                    <label asp-for="CreditAccountId" class="form-label fw-semibold">
+                        Account to Receive Loan Amount
+                    </label>
+                    <select asp-for="CreditAccountId" class="form-select"
+                            asp-items="@accountList">
+                        <option value="">-- Select Account --</option>
+                    </select>
+                    <span asp-validation-for="CreditAccountId" class="text-danger small"></span>
+                    <div class="form-text">The approved loan amount will be credited to this account.</div>
+                </div>
+            }
+
             <div class="mb-3">
                 <label asp-for="InterestRate" class="form-label fw-semibold">Interest Rate (%)</label>
                 <div class="input-group">
@@ -84,9 +112,10 @@
                 <label class="form-label fw-semibold">Estimated Monthly EMI</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input type="text" id="EMIPreview" class="form-control" readonly placeholder="Calculated on submit" />
+                    <input type="text" id="EMIPreview" class="form-control"
+                           readonly placeholder="Calculated on submit" />
                 </div>
-                <div class="form-text">Simple interest formula: (P × R × T / 100 + P) / (T × 12)</div>
+                <div class="form-text">Estimated monthly payment based on loan details.</div>
             </div>
 
             <div class="d-flex gap-2">
@@ -98,20 +127,20 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
+        // ── EMI preview ──────────────────────────────────────────────────────
         function fetchRateAndUpdateEMI() {
             var loanType = document.getElementById('LoanType').value;
             var amount   = parseFloat(document.getElementById('LoanAmount').value) || 0;
             var tenure   = parseInt(document.getElementById('Tenure').value) || 1;
 
-            if (!loanType) { return; }
+            if (!loanType) return;
 
             fetch('/Loan/GetInterestRate?loanType=' + encodeURIComponent(loanType))
                 .then(r => r.json())
                 .then(rate => {
                     document.getElementById('InterestRate').value = rate;
-                    // Calculate preview EMI
                     if (amount > 0) {
                         var si    = amount * rate * tenure / 100;
                         var total = amount + si;
@@ -121,8 +150,40 @@
                 });
         }
 
-        document.getElementById('LoanType').addEventListener('change', fetchRateAndUpdateEMI);
-        document.getElementById('LoanAmount').addEventListener('input', fetchRateAndUpdateEMI);
-        document.getElementById('Tenure').addEventListener('change', fetchRateAndUpdateEMI);
+        document.getElementById('LoanType').addEventListener('change',  fetchRateAndUpdateEMI);
+        document.getElementById('LoanAmount').addEventListener('input',  fetchRateAndUpdateEMI);
+        document.getElementById('Tenure').addEventListener('change',     fetchRateAndUpdateEMI);
+
+        // ── Load customer accounts for Admin / LoanOfficer ───────────────────
+        var customerSelect = document.getElementById('CustomerIdSelect');
+        if (customerSelect) {
+            customerSelect.addEventListener('change', function () {
+                var customerId  = this.value;
+                var creditDiv   = document.getElementById('creditAccountDiv');
+                var creditSelect= document.getElementById('CreditAccountId');
+
+                if (!customerId) {
+                    creditDiv.style.display = 'none';
+                    creditSelect.innerHTML  = '<option value="">-- Select Customer First --</option>';
+                    return;
+                }
+
+                fetch('/Transaction/GetCustomerAccounts?customerId=' + customerId)
+                    .then(r => r.json())
+                    .then(data => {
+                        creditSelect.innerHTML = '<option value="">-- Select Account --</option>';
+                        if (data.success && data.accounts && data.accounts.length > 0) {
+                            data.accounts.forEach(function (acc) {
+                                creditSelect.innerHTML +=
+                                    '<option value="' + acc.accountId + '">' + acc.label + '</option>';
+                            });
+                        } else {
+                            creditSelect.innerHTML =
+                                '<option value="">No accounts found for this customer</option>';
+                        }
+                        creditDiv.style.display = 'block';
+                    });
+            });
+        }
     </script>
 }

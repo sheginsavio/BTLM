@@ -42,9 +42,15 @@ namespace MVC_BANK_FINAL_C.Models.Entities
         [Display(Name = "Monthly EMI")]
         public decimal MonthlyEMI { get; set; } = 0;
 
+        [Display(Name = "Credit Account")]
+        public int? CreditAccountId { get; set; }
+
         // Navigation properties
         [ForeignKey("CustomerId")]
         public Customer? Customer { get; set; }
+
+        [ForeignKey("CreditAccountId")]
+        public Account? CreditAccount { get; set; }
 
         public ICollection<Repayment> Repayments { get; set; } = new List<Repayment>();
     }

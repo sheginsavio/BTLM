@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
               "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAswBwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-16T06:21:43.897Z",
               "EditorCaption": ""
@@ -55,8 +55,7 @@
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T06:21:28.845Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T06:21:28.845Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T03:02:43.362Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-15T03:02:43.362Z"
             },
             {
               "$type": "Document",
