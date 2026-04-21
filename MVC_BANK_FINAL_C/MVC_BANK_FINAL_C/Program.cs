@@ -44,6 +44,11 @@ app.UseHttpsRedirection();
 
 app.UseStatusCodePagesWithReExecute("/Error/NotFound");
 
+// Set default culture to Indian Rupee (₹) formatting
+var cultureInfo = new System.Globalization.CultureInfo("en-IN");
+System.Globalization.CultureInfo.DefaultThreadCurrentCulture   = cultureInfo;
+System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 // Session must come before routing
 app.UseSession();
 

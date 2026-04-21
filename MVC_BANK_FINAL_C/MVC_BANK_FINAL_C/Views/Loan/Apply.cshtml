@@ -64,7 +64,7 @@
             <div class="mb-3">
                 <label asp-for="LoanAmount" class="form-label fw-semibold">Loan Amount</label>
                 <div class="input-group">
-                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">₹</span>
                     <input asp-for="LoanAmount" class="form-control" type="number"
                            step="0.01" min="1" placeholder="0.00" id="LoanAmount" />
                 </div>
@@ -111,7 +111,7 @@
             <div class="mb-4">
                 <label class="form-label fw-semibold">Estimated Monthly EMI</label>
                 <div class="input-group">
-                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">₹</span>
                     <input type="text" id="EMIPreview" class="form-control"
                            readonly placeholder="Calculated on submit" />
                 </div>
@@ -145,7 +145,7 @@
                         var si    = amount * rate * tenure / 100;
                         var total = amount + si;
                         var emi   = total / (tenure * 12);
-                        document.getElementById('EMIPreview').value = '$' + emi.toFixed(2);
+                        document.getElementById('EMIPreview').value = '₹' + emi.toFixed(2);
                     }
                 });
         }
