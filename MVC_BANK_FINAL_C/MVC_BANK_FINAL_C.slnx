@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="MVC_BANK_FINAL_C/MVC_BANK_FINAL_C.csproj" />
+  <Project Path="Tests/Tests.csproj" Id="a97765a2-0bce-4731-845e-b054cf7e2648" />
 </Solution>

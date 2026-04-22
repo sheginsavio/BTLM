@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\tests\\services\\customerservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|solutionrelative:tests\\services\\customerservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\tests\\services\\loanservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|solutionrelative:tests\\services\\loanservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\tests\\helpers\\dbcontextmockhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A97765A2-0BCE-4731-845E-B054CF7E2648}|Tests\\Tests.csproj|solutionrelative:tests\\helpers\\dbcontextmockhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,7 +46,46 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoanServiceTests.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Services\\LoanServiceTests.cs",
+              "RelativeDocumentMoniker": "Tests\\Services\\LoanServiceTests.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Services\\LoanServiceTests.cs",
+              "RelativeToolTip": "Tests\\Services\\LoanServiceTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T04:16:14.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CustomerServiceTests.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Services\\CustomerServiceTests.cs",
+              "RelativeDocumentMoniker": "Tests\\Services\\CustomerServiceTests.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Services\\CustomerServiceTests.cs",
+              "RelativeToolTip": "Tests\\Services\\CustomerServiceTests.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAiwFEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T04:03:59.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DbContextMockHelper.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Helpers\\DbContextMockHelper.cs",
+              "RelativeDocumentMoniker": "Tests\\Helpers\\DbContextMockHelper.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\Tests\\Helpers\\DbContextMockHelper.cs",
+              "RelativeToolTip": "Tests\\Helpers\\DbContextMockHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T04:03:37.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CustomerService.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
@@ -47,7 +98,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
@@ -59,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "AccountViewModel.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Models\\ViewModels\\AccountViewModel.cs",
@@ -71,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "BankingDbContext.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Data\\BankingDbContext.cs",
