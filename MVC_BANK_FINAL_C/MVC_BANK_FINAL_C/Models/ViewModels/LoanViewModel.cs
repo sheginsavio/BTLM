@@ -16,7 +16,7 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
         public string LoanType { get; set; } = "Personal";
 
         [Required(ErrorMessage = "Loan amount is required")]
-        [Range(1, double.MaxValue, ErrorMessage = "Loan amount must be greater than zero")]
+        [Range(1, 2500000, ErrorMessage = "Loan amount must be between ₹1 and ₹25,00,000")]
         [DataType(DataType.Currency)]
         [Display(Name = "Loan Amount")]
         public decimal LoanAmount { get; set; }

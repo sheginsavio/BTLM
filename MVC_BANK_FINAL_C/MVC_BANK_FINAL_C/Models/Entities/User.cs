@@ -25,5 +25,13 @@ namespace MVC_BANK_FINAL_C.Models.Entities
 
         [ForeignKey("CustomerId")]
         public Customer? Customer { get; set; }
+
+        [StringLength(200)]
+        [Display(Name = "Security Question")]
+        public string? SecurityQuestion { get; set; }
+
+        [StringLength(256)]
+        [Display(Name = "Security Answer")]
+        public string? SecurityAnswer { get; set; }
     }
 }

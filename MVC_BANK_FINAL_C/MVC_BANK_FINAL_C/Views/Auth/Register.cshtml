@@ -26,7 +26,8 @@
                 </div>
                 <div class="col-12">
                     <label asp-for="ContactInfo" class="form-label fw-semibold"></label>
-                    <input asp-for="ContactInfo" class="form-control" placeholder="Phone or address" />
+                    <input asp-for="ContactInfo" class="form-control" type="tel"
+                           placeholder="Enter 10-digit phone number" maxlength="15" />
                     <span asp-validation-for="ContactInfo" class="text-danger small"></span>
                 </div>
                 <div class="col-12">
@@ -44,6 +45,30 @@
                     <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm" autocomplete="new-password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                 </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label asp-for="SecurityQuestion" class="form-label fw-semibold">
+                    Security Question
+                </label>
+                <input asp-for="SecurityQuestion" class="form-control"
+                       placeholder="e.g. What was the name of your first pet?" />
+                <div class="form-text">
+                    You will need this to recover your password if forgotten.
+                </div>
+                <span asp-validation-for="SecurityQuestion" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SecurityAnswer" class="form-label fw-semibold">
+                    Security Answer
+                </label>
+                <input asp-for="SecurityAnswer" class="form-control"
+                       placeholder="Your answer (case-insensitive)" />
+                <div class="form-text text-muted">
+                    Answer is not case-sensitive.
+                </div>
+                <span asp-validation-for="SecurityAnswer" class="text-danger small"></span>
             </div>
 
             <div class="d-grid mt-4 mb-3">

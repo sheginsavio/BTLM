@@ -222,3 +222,4 @@ C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FIN
 C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C\obj\Debug\net10.0\MVC_BANK_FINAL_C.pdb
 C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C\obj\Debug\net10.0\MVC_BANK_FINAL_C.genruntimeconfig.cache
 C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C\obj\Debug\net10.0\ref\MVC_BANK_FINAL_C.dll
+C:\SHEGIN SAVIO S S\Visual Studio Community\Sample\MVC_BANK_FINAL_C\MVC_BANK_FINAL_C\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

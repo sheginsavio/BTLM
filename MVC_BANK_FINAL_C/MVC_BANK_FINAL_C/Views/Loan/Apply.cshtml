@@ -66,9 +66,10 @@
                 <div class="input-group">
                     <span class="input-group-text">₹</span>
                     <input asp-for="LoanAmount" class="form-control" type="number"
-                           step="0.01" min="1" placeholder="0.00" id="LoanAmount" />
+                           step="0.01" min="1" max="2500000" placeholder="0.00" id="LoanAmount" />
                 </div>
                 <span asp-validation-for="LoanAmount" class="text-danger small"></span>
+                <div class="form-text">Maximum loan amount is ₹25,00,000</div>
             </div>
 
             <div class="mb-3">

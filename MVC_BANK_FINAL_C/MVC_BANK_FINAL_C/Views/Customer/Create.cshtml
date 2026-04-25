@@ -24,7 +24,8 @@
             </div>
             <div class="mb-3">
                 <label asp-for="ContactInfo" class="form-label fw-semibold"></label>
-                <input asp-for="ContactInfo" class="form-control" placeholder="Phone, address, etc." />
+                <input asp-for="ContactInfo" class="form-control" type="tel"
+                       placeholder="Enter 10-digit phone number" maxlength="15" />
                 <span asp-validation-for="ContactInfo" class="text-danger small"></span>
             </div>
             <div class="d-flex gap-2">

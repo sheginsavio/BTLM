@@ -16,8 +16,9 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
         [StringLength(150)]
         public string Email { get; set; } = string.Empty;
 
-        [StringLength(200)]
-        [Display(Name = "Contact Information")]
+        [StringLength(15, MinimumLength = 10, ErrorMessage = "Phone number must be between 10 and 15 digits")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Contact information must contain numbers only")]
+        [Display(Name = "Phone Number")]
         public string? ContactInfo { get; set; }
     }
 }

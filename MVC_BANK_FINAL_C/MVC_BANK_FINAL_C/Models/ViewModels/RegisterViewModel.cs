@@ -15,9 +15,10 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
         [Display(Name = "Email Address")]
         public string Email { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Contact info is required")]
-        [StringLength(200)]
-        [Display(Name = "Contact Information")]
+        [Required(ErrorMessage = "Phone number is required")]
+        [StringLength(15, MinimumLength = 10, ErrorMessage = "Phone number must be between 10 and 15 digits")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Phone number must contain numbers only")]
+        [Display(Name = "Phone Number")]
         public string ContactInfo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Username is required")]
@@ -36,5 +37,15 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Security question is required")]
+        [StringLength(200, ErrorMessage = "Question cannot exceed 200 characters")]
+        [Display(Name = "Security Question")]
+        public string SecurityQuestion { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Security answer is required")]
+        [StringLength(100, ErrorMessage = "Answer cannot exceed 100 characters")]
+        [Display(Name = "Security Answer")]
+        public string SecurityAnswer { get; set; } = string.Empty;
     }
 }

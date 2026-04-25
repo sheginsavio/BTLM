@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MVC_BANK_FINAL_C.Helpers;
 using MVC_BANK_FINAL_C.Models.Entities;
 
 namespace MVC_BANK_FINAL_C.Data
@@ -95,10 +96,10 @@ namespace MVC_BANK_FINAL_C.Data
 
             // ── Seed default staff users ────────────────────────
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Username = "admin",        Password = "admin123",  Role = "Admin",        CustomerId = null },
-                new User { UserId = 2, Username = "teller1",      Password = "teller123", Role = "Teller",       CustomerId = null },
-                new User { UserId = 3, Username = "loanofficer1", Password = "loan123",   Role = "LoanOfficer",  CustomerId = null },
-                new User { UserId = 4, Username = "auditor1",     Password = "audit123",  Role = "Auditor",      CustomerId = null }
+                new User { UserId = 1, Username = "admin",        Password = PasswordHelper.HashPassword("admin123"),  Role = "Admin",       CustomerId = null },
+                new User { UserId = 2, Username = "teller1",      Password = PasswordHelper.HashPassword("teller123"), Role = "Teller",      CustomerId = null },
+                new User { UserId = 3, Username = "loanofficer1", Password = PasswordHelper.HashPassword("loan123"),   Role = "LoanOfficer", CustomerId = null },
+                new User { UserId = 4, Username = "auditor1",     Password = PasswordHelper.HashPassword("audit123"),  Role = "Auditor",     CustomerId = null }
             );
         }
     }

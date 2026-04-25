@@ -73,7 +73,7 @@ namespace MVC_BANK_FINAL_C.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCustomerAccounts(int customerId)
         {
-            if (Role != "Admin" && Role != "Teller")
+            if (Role != "Admin" && Role != "Teller" && Role != "LoanOfficer")
                 return Json(new { success = false, message = "Access denied" });
 
             var accounts = await _context.Accounts

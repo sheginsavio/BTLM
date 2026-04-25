@@ -34,6 +34,18 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/ForgotPasswordStep2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxGb3Jnb3RQYXNzd29yZFN0ZXAyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/ForgotPasswordStep3.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxGb3Jnb3RQYXNzd29yZFN0ZXAzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/SHEGIN SAVIO S S/Visual Studio Community/Sample/MVC_BANK_FINAL_C/MVC_BANK_FINAL_C/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

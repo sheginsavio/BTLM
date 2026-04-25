@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVC_BANK_FINAL_C.Data;
+using MVC_BANK_FINAL_C.Helpers;
+using MVC_BANK_FINAL_C.Models.Entities;
 using MVC_BANK_FINAL_C.Models.ViewModels;
 using MVC_BANK_FINAL_C.Services.Interfaces;
 
@@ -7,10 +11,12 @@ namespace MVC_BANK_FINAL_C.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly BankingDbContext _context;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, BankingDbContext context)
         {
             _customerService = customerService;
+            _context         = context;
         }
 
         private string Role => HttpContext.Session.GetString("UserRole") ?? "";
@@ -55,10 +61,42 @@ namespace MVC_BANK_FINAL_C.Controllers
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
             }
+
+            var emailExists = await _context.Customers
+                .AnyAsync(c => c.Email == vm.Email);
+            if (emailExists)
+            {
+                ModelState.AddModelError("Email", "A customer with this email already exists.");
+                return View(vm);
+            }
+
             if (!ModelState.IsValid) return View(vm);
 
-            await _customerService.CreateAccount(vm);
-            TempData["Success"] = "Customer created successfully.";
+            var customer = await _customerService.CreateAccount(vm);
+
+            // Auto-generate username from name (lowercase, no spaces) + customerId
+            string baseUsername = vm.Name.ToLower().Replace(" ", "") + customer.CustomerId;
+            string defaultPassword = "Bank@" + customer.CustomerId;
+
+            // Check if username already exists, append number if needed
+            string username = baseUsername;
+            int suffix = 1;
+            while (await _context.Users.AnyAsync(u => u.Username == username))
+            {
+                username = baseUsername + suffix++;
+            }
+
+            var user = new User
+            {
+                Username   = username,
+                Password   = PasswordHelper.HashPassword(defaultPassword),
+                Role       = "Customer",
+                CustomerId = customer.CustomerId
+            };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Customer created. Login: Username = '{username}', Default Password = 'Bank@{customer.CustomerId}'. Please share with the customer.";
             return RedirectToAction(nameof(Index));
         }
 
