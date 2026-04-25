@@ -97,6 +97,7 @@
                         <div class="nav-section">Banking</div>
                         <a class="nav-link" asp-controller="Customer" asp-action="Index">All Customers</a>
                         <a class="nav-link" asp-controller="Customer" asp-action="Create">+ Add Customer</a>
+                        <a class="nav-link" asp-controller="AccountRequest" asp-action="PendingRequests">Account Requests</a>
                         <a class="nav-link" asp-controller="Transaction" asp-action="Index">Transactions</a>
                         <a class="nav-link" asp-controller="Transaction" asp-action="Deposit">Deposit</a>
                         <a class="nav-link" asp-controller="Transaction" asp-action="Withdraw">Withdraw</a>
@@ -115,6 +116,8 @@
                         <a class="nav-link" asp-controller="Transaction" asp-action="Index">My Transactions</a>
                         <a class="nav-link" asp-controller="Loan" asp-action="Index">My Loans</a>
                         <a class="nav-link" asp-controller="Loan" asp-action="Apply">Apply for Loan</a>
+                        <a class="nav-link" asp-controller="AccountRequest" asp-action="Request">Request Account</a>
+                        <a class="nav-link" asp-controller="AccountRequest" asp-action="MyRequests">My Requests</a>
                     }
 
                     @if (isAdmin || isLoanOfficer)
@@ -139,6 +142,12 @@
                         <div class="nav-section">Reports</div>
                         <a class="nav-link" asp-controller="Report" asp-action="Transactions">Transaction Report</a>
                         <a class="nav-link" asp-controller="Report" asp-action="AuditLogs">Audit Logs</a>
+                    }
+
+                    @if (isAdmin)
+                    {
+                        <div class="nav-section">Administration</div>
+                        <a class="nav-link" asp-controller="User" asp-action="Index">User Management</a>
                     }
                 </div>
             </nav>

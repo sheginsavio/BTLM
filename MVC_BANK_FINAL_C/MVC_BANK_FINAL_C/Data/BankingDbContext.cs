@@ -17,6 +17,7 @@ namespace MVC_BANK_FINAL_C.Data
         public DbSet<Repayment> Repayments { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AccountRequest> AccountRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,6 +66,13 @@ namespace MVC_BANK_FINAL_C.Data
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // Customer -> AccountRequest (one-to-many)
+            modelBuilder.Entity<AccountRequest>()
+                .HasOne(r => r.Customer)
+                .WithMany()
+                .HasForeignKey(r => r.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // ── Decimal precision ───────────────────────────────
             modelBuilder.Entity<Account>()
                 .Property(a => a.Balance)
@@ -96,10 +104,10 @@ namespace MVC_BANK_FINAL_C.Data
 
             // ── Seed default staff users ────────────────────────
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Username = "admin",        Password = PasswordHelper.HashPassword("admin123"),  Role = "Admin",       CustomerId = null },
-                new User { UserId = 2, Username = "teller1",      Password = PasswordHelper.HashPassword("teller123"), Role = "Teller",      CustomerId = null },
-                new User { UserId = 3, Username = "loanofficer1", Password = PasswordHelper.HashPassword("loan123"),   Role = "LoanOfficer", CustomerId = null },
-                new User { UserId = 4, Username = "auditor1",     Password = PasswordHelper.HashPassword("audit123"),  Role = "Auditor",     CustomerId = null }
+                new User { UserId = 1, Username = "admin",        Password = PasswordHelper.HashPassword("admin123"),  Role = "Admin",       CustomerId = null, IsFirstLogin = false },
+                new User { UserId = 2, Username = "teller1",      Password = PasswordHelper.HashPassword("teller123"), Role = "Teller",      CustomerId = null, IsFirstLogin = false },
+                new User { UserId = 3, Username = "loanofficer1", Password = PasswordHelper.HashPassword("loan123"),   Role = "LoanOfficer", CustomerId = null, IsFirstLogin = false },
+                new User { UserId = 4, Username = "auditor1",     Password = PasswordHelper.HashPassword("audit123"),  Role = "Auditor",     CustomerId = null, IsFirstLogin = false }
             );
         }
     }

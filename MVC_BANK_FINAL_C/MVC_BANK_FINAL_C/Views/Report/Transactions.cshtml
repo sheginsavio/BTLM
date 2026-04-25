@@ -15,11 +15,14 @@
         <form method="get" asp-action="Transactions" class="row g-3 align-items-end">
             <div class="col-md-4">
                 <label class="form-label fw-semibold">From Date</label>
-                <input type="date" name="from" class="form-control" value="@(from?.ToString("yyyy-MM-dd"))" />
+                <input type="date" name="from" id="fromDate" class="form-control"
+                       value="@(from?.ToString("yyyy-MM-dd"))" />
             </div>
             <div class="col-md-4">
                 <label class="form-label fw-semibold">To Date</label>
-                <input type="date" name="to" class="form-control" value="@(to?.ToString("yyyy-MM-dd"))" />
+                <input type="date" name="to" id="toDate" class="form-control"
+                       value="@(to?.ToString("yyyy-MM-dd"))"
+                       min="@(from?.ToString("yyyy-MM-dd"))" />
             </div>
             <div class="col-md-4 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Filter</button>
@@ -70,3 +73,25 @@
         </table>
     </div>
 </div>
+
+<script>
+    // When From date changes, update To date minimum
+    document.getElementById('fromDate').addEventListener('change', function () {
+        var fromVal = this.value;
+        var toInput = document.getElementById('toDate');
+        toInput.min = fromVal;
+
+        // If current To date is before new From date, reset it
+        if (toInput.value && toInput.value < fromVal) {
+            toInput.value = fromVal;
+        }
+    });
+
+    // On page load, set min if From date already has a value
+    window.addEventListener('load', function () {
+        var fromVal = document.getElementById('fromDate').value;
+        if (fromVal) {
+            document.getElementById('toDate').min = fromVal;
+        }
+    });
+</script>

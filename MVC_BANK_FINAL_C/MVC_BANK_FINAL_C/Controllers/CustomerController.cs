@@ -70,12 +70,21 @@ namespace MVC_BANK_FINAL_C.Controllers
                 return View(vm);
             }
 
+            var mobileExists = await _context.Customers
+                .AnyAsync(c => c.ContactInfo == vm.ContactInfo);
+            if (mobileExists)
+            {
+                ModelState.AddModelError("ContactInfo",
+                    "A customer with this phone number already exists.");
+                return View(vm);
+            }
+
             if (!ModelState.IsValid) return View(vm);
 
             var customer = await _customerService.CreateAccount(vm);
 
             // Auto-generate username from name (lowercase, no spaces) + customerId
-            string baseUsername = vm.Name.ToLower().Replace(" ", "") + customer.CustomerId;
+            string baseUsername    = vm.Name.ToLower().Replace(" ", "") + customer.CustomerId;
             string defaultPassword = "Bank@" + customer.CustomerId;
 
             // Check if username already exists, append number if needed
@@ -88,10 +97,11 @@ namespace MVC_BANK_FINAL_C.Controllers
 
             var user = new User
             {
-                Username   = username,
-                Password   = PasswordHelper.HashPassword(defaultPassword),
-                Role       = "Customer",
-                CustomerId = customer.CustomerId
+                Username     = username,
+                Password     = PasswordHelper.HashPassword(defaultPassword),
+                Role         = "Customer",
+                CustomerId   = customer.CustomerId,
+                IsFirstLogin = true   // Force password change on first login
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

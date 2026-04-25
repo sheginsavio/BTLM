@@ -1,0 +1,52 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.AccountRequestViewModel
+@{
+    ViewData["Title"] = "Request New Account";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm w-100" style="max-width:500px;">
+        <div class="card-header bg-primary text-white fw-semibold">
+            Request New Bank Account
+        </div>
+        <div class="card-body p-4">
+
+            <div class="alert alert-info small mb-3">
+                <i class="bi bi-info-circle"></i>
+                Your request will be reviewed by our team within 1&ndash;2 business days.
+            </div>
+
+            <form asp-action="Request" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="alert alert-danger py-2 small"></div>
+
+                <input type="hidden" asp-for="CustomerId" />
+
+                <div class="mb-3">
+                    <label asp-for="AccountType" class="form-label fw-semibold"></label>
+                    <select asp-for="AccountType"
+                            asp-items="Html.GetEnumSelectList<MVC_BANK_FINAL_C.Data.AccountType>()"
+                            class="form-select">
+                        <option value="">-- Select Account Type --</option>
+                    </select>
+                    <span asp-validation-for="AccountType" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary fw-semibold">
+                        Submit Request
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <a asp-action="MyRequests" class="text-decoration-none small">
+                    View My Requests &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

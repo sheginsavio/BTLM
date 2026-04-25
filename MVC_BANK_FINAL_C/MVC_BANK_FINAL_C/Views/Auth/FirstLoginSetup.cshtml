@@ -1,0 +1,66 @@
+@model MVC_BANK_FINAL_C.Models.ViewModels.FirstLoginViewModel
+@{
+    ViewData["Title"] = "Set Up Your Account";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="card auth-card" style="max-width:520px;">
+    <div class="card-header bg-warning text-dark text-center py-3">
+        <h5 class="mb-0 fw-bold">&#128274; Welcome! Please Set Up Your Account</h5>
+    </div>
+    <div class="card-body p-4">
+
+        <div class="alert alert-info small mb-4">
+            This is your first login. For security, please change your default password
+            and set up a security question.
+        </div>
+
+        <form asp-action="FirstLoginSetup" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small"></div>
+
+            <div class="mb-3">
+                <label asp-for="NewPassword" class="form-label fw-semibold"></label>
+                <input asp-for="NewPassword" class="form-control form-control-lg"
+                       placeholder="New password" autocomplete="new-password" />
+                <span asp-validation-for="NewPassword" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="ConfirmPassword" class="form-label fw-semibold"></label>
+                <input asp-for="ConfirmPassword" class="form-control form-control-lg"
+                       placeholder="Confirm new password" autocomplete="new-password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+            </div>
+
+            <hr />
+
+            <div class="mb-3">
+                <label asp-for="SecurityQuestion" class="form-label fw-semibold"></label>
+                <input asp-for="SecurityQuestion" class="form-control"
+                       placeholder="e.g. What was your first pet's name?" />
+                <span asp-validation-for="SecurityQuestion" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SecurityAnswer" class="form-label fw-semibold"></label>
+                <input asp-for="SecurityAnswer" class="form-control"
+                       placeholder="Your answer (not case-sensitive)" autocomplete="off" />
+                <div class="form-text text-muted">
+                    You will need this to recover your password if forgotten.
+                </div>
+                <span asp-validation-for="SecurityAnswer" class="text-danger small"></span>
+            </div>
+
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-warning btn-lg fw-semibold">
+                    Save &amp; Continue
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -19,6 +19,10 @@ namespace MVC_BANK_FINAL_C.Filters
             var controllerName = context.RouteData.Values["controller"]?.ToString();
             if (controllerName == "Error") return;
 
+            // Allow FirstLoginSetup — session may not be fully established yet
+            var actionName = context.RouteData.Values["action"]?.ToString();
+            if (controllerName == "Auth" && actionName == "FirstLoginSetup") return;
+
             // Check session for a logged-in user
             var userId = context.HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(userId))

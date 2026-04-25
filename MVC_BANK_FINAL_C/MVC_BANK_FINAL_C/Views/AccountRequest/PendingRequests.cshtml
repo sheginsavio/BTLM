@@ -1,0 +1,131 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.AccountRequest>
+@{
+    ViewData["Title"] = "Account Requests";
+    int pendingCount = Model.Count(r => r.Status == "PENDING");
+}
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold fs-5">
+            Account Requests
+            <span class="badge bg-warning text-dark ms-2">@pendingCount Pending</span>
+        </span>
+    </div>
+    <div class="card-body pb-0">
+        <!-- Filter tabs -->
+        <ul class="nav nav-tabs mb-3" id="filterTabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-filter="ALL">All
+                    <span class="badge bg-secondary ms-1">@Model.Count()</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-filter="PENDING">Pending
+                    <span class="badge bg-warning text-dark ms-1">@Model.Count(r => r.Status == "PENDING")</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-filter="APPROVED">Approved
+                    <span class="badge bg-success ms-1">@Model.Count(r => r.Status == "APPROVED")</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-filter="REJECTED">Rejected
+                    <span class="badge bg-danger ms-1">@Model.Count(r => r.Status == "REJECTED")</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center text-muted py-5">No account requests found.</div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Request #</th>
+                        <th>Customer Name</th>
+                        <th>Account Type</th>
+                        <th>Status</th>
+                        <th>Requested On</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTable">
+                    @foreach (var r in Model)
+                    {
+                        <tr data-status="@r.Status">
+                            <td>@r.RequestId</td>
+                            <td>@(r.Customer?.Name ?? "-")</td>
+                            <td>@r.AccountType</td>
+                            <td>
+                                @if (r.Status == "PENDING")
+                                {
+                                    <span class="badge bg-warning text-dark">PENDING</span>
+                                }
+                                else if (r.Status == "APPROVED")
+                                {
+                                    <span class="badge bg-success">APPROVED</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">REJECTED</span>
+                                }
+                            </td>
+                            <td>@r.RequestedOn.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>
+                                @if (r.Status == "PENDING")
+                                {
+                                    <form asp-action="Approve" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="requestId" value="@r.RequestId" />
+                                        <button type="submit" class="btn btn-success btn-sm"
+                                                onclick="return confirm('Approve this account request?')">
+                                            Approve
+                                        </button>
+                                    </form>
+                                    <a asp-action="Reject" asp-route-requestId="@r.RequestId"
+                                       class="btn btn-danger btn-sm ms-1">Reject</a>
+                                }
+                                else
+                                {
+                                    @if (r.Status == "APPROVED")
+                                    {
+                                        <span class="badge bg-success">Approved</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Rejected</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('#filterTabs .nav-link').forEach(function (tab) {
+        tab.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelectorAll('#filterTabs .nav-link').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            var filter = this.getAttribute('data-filter');
+            document.querySelectorAll('#requestsTable tr').forEach(function (row) {
+                if (filter === 'ALL' || row.getAttribute('data-status') === filter) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

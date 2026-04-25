@@ -33,5 +33,10 @@ namespace MVC_BANK_FINAL_C.Models.Entities
         [StringLength(256)]
         [Display(Name = "Security Answer")]
         public string? SecurityAnswer { get; set; }
+
+        public bool IsFirstLogin { get; set; } = false;
+
+        [StringLength(256)]
+        public string? PasswordResetToken { get; set; }
     }
 }

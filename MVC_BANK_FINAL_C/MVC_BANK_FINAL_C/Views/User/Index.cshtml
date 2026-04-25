@@ -1,0 +1,75 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.User>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold fs-5">
+            User Management
+            <span class="badge bg-secondary ms-2">@Model.Count() users</span>
+        </span>
+        <a asp-action="Create" class="btn btn-primary btn-sm">+ Create Staff User</a>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Security Question Set</th>
+                    <th>First Login Pending</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var u in Model)
+                {
+                    <tr>
+                        <td>@u.UserId</td>
+                        <td class="fw-semibold">@u.Username</td>
+                        <td>
+                            @{
+                                string badgeClass = u.Role switch
+                                {
+                                    "Admin"       => "bg-danger",
+                                    "Teller"      => "bg-primary",
+                                    "LoanOfficer" => "bg-info text-dark",
+                                    "Auditor"     => "bg-secondary",
+                                    "Customer"    => "bg-success",
+                                    _             => "bg-dark"
+                                };
+                            }
+                            <span class="badge @badgeClass">@u.Role</span>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(u.SecurityQuestion))
+                            {
+                                <span class="text-success fw-semibold">&#10003; Yes</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">&#10007; No</span>
+                            }
+                        </td>
+                        <td>
+                            @if (u.IsFirstLogin)
+                            {
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">No</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="ResetPassword" asp-route-id="@u.UserId"
+                               class="btn btn-warning btn-sm">Reset Password</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

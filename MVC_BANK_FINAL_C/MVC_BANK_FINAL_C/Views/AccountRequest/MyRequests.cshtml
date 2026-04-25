@@ -1,0 +1,63 @@
+@model IEnumerable<MVC_BANK_FINAL_C.Models.Entities.AccountRequest>
+@{
+    ViewData["Title"] = "My Account Requests";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold fs-5">My Account Requests</span>
+        <a asp-action="Request" class="btn btn-primary btn-sm">+ Request New Account</a>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center text-muted py-5">
+                <p class="mb-2">No account requests found.</p>
+                <a asp-action="Request" class="btn btn-outline-primary btn-sm">Submit your first request</a>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Request #</th>
+                        <th>Account Type</th>
+                        <th>Status</th>
+                        <th>Requested On</th>
+                        <th>Reviewed On</th>
+                        <th>Reviewed By</th>
+                        <th>Rejection Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@r.RequestId</td>
+                            <td>@r.AccountType</td>
+                            <td>
+                                @if (r.Status == "PENDING")
+                                {
+                                    <span class="badge bg-warning text-dark">PENDING</span>
+                                }
+                                else if (r.Status == "APPROVED")
+                                {
+                                    <span class="badge bg-success">APPROVED</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">REJECTED</span>
+                                }
+                            </td>
+                            <td>@r.RequestedOn.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>@(r.ReviewedOn.HasValue ? r.ReviewedOn.Value.ToString("dd MMM yyyy HH:mm") : "-")</td>
+                            <td>@(r.ReviewedBy ?? "-")</td>
+                            <td>@(r.RejectionReason ?? "-")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

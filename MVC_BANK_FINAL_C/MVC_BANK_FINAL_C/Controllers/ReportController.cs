@@ -22,6 +22,14 @@ namespace MVC_BANK_FINAL_C.Controllers
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
             }
+
+            // Server-side date validation
+            if (from.HasValue && to.HasValue && to.Value < from.Value)
+            {
+                TempData["Error"] = "End date cannot be before start date.";
+                to = from; // reset to equal from
+            }
+
             ViewBag.From = from;
             ViewBag.To   = to;
             var transactions = await _reportService.GenerateTransactionReport(from, to);

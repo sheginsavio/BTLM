@@ -54,6 +54,13 @@ namespace MVC_BANK_FINAL_C.Controllers
             if (user.CustomerId.HasValue)
                 HttpContext.Session.SetString("CustomerId", user.CustomerId.Value.ToString());
 
+            // Check if first login — force password + security question setup
+            if (user.IsFirstLogin)
+            {
+                TempData["FirstLoginUserId"] = user.UserId.ToString();
+                return RedirectToAction(nameof(FirstLoginSetup));
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -87,6 +94,15 @@ namespace MVC_BANK_FINAL_C.Controllers
                 return View(vm);
             }
 
+            bool mobileTaken = await _context.Customers
+                .AnyAsync(c => c.ContactInfo == vm.ContactInfo);
+            if (mobileTaken)
+            {
+                ModelState.AddModelError("ContactInfo",
+                    "This phone number is already registered.");
+                return View(vm);
+            }
+
             var customer = new Customer
             {
                 Name        = vm.Name,
@@ -103,7 +119,8 @@ namespace MVC_BANK_FINAL_C.Controllers
                 Role             = "Customer",
                 CustomerId       = customer.CustomerId,
                 SecurityQuestion = vm.SecurityQuestion,
-                SecurityAnswer   = PasswordHelper.HashPassword(vm.SecurityAnswer.ToLower().Trim())
+                SecurityAnswer   = PasswordHelper.HashPassword(vm.SecurityAnswer.ToLower().Trim()),
+                IsFirstLogin     = false
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -276,6 +293,63 @@ namespace MVC_BANK_FINAL_C.Controllers
 
             TempData["Success"] = "Password reset successfully! Please log in with your new password.";
             return RedirectToAction(nameof(Login));
+        }
+
+        // ── First Login Setup ─────────────────────────────────────
+
+        public IActionResult FirstLoginSetup()
+        {
+            var userId = HttpContext.Session.GetString("UserId")
+                      ?? TempData["FirstLoginUserId"] as string;
+
+            if (string.IsNullOrEmpty(userId))
+                return RedirectToAction(nameof(Login));
+
+            TempData.Keep("FirstLoginUserId");
+            return View(new FirstLoginViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FirstLoginSetup(FirstLoginViewModel vm)
+        {
+            var userId = HttpContext.Session.GetString("UserId")
+                      ?? TempData["FirstLoginUserId"] as string;
+
+            if (string.IsNullOrEmpty(userId))
+                return RedirectToAction(nameof(Login));
+
+            if (!ModelState.IsValid)
+            {
+                TempData.Keep("FirstLoginUserId");
+                return View(vm);
+            }
+
+            var user = await _context.Users.FindAsync(int.Parse(userId));
+            if (user == null)
+                return RedirectToAction(nameof(Login));
+
+            user.Password         = PasswordHelper.HashPassword(vm.NewPassword);
+            user.SecurityQuestion = vm.SecurityQuestion;
+            user.SecurityAnswer   = PasswordHelper.HashPassword(
+                                        vm.SecurityAnswer.ToLower().Trim());
+            user.IsFirstLogin     = false;
+
+            await _context.SaveChangesAsync();
+
+            // Set session if not already set (coming from first login redirect)
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            {
+                HttpContext.Session.SetString("UserId",   user.UserId.ToString());
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("UserRole", user.Role);
+                if (user.CustomerId.HasValue)
+                    HttpContext.Session.SetString("CustomerId",
+                        user.CustomerId.Value.ToString());
+            }
+
+            TempData["Success"] = "Password and security question set successfully! Welcome!";
+            return RedirectToAction("Index", "Home");
         }
     }
 }
