@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\migrations\\20260424175949_updateseedpasswordhashes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\migrations\\20260424175949_updateseedpasswordhashes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\services\\implementations\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,64 +27,28 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\appsettings.json",
-              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\appsettings.json",
-              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\appsettings.json",
-              "RelativeToolTip": "MVC_BANK_FINAL_C\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-25T04:28:28.642Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "20260424175949_UpdateSeedPasswordHashes.cs",
-              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Migrations\\20260424175949_UpdateSeedPasswordHashes.cs",
-              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Migrations\\20260424175949_UpdateSeedPasswordHashes.cs",
-              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Migrations\\20260424175949_UpdateSeedPasswordHashes.cs",
-              "RelativeToolTip": "MVC_BANK_FINAL_C\\Migrations\\20260424175949_UpdateSeedPasswordHashes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T17:59:49.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CustomerService.cs",
-              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
-              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
-              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
-              "RelativeToolTip": "MVC_BANK_FINAL_C\\Services\\Implementations\\CustomerService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAiwBMAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T11:37:34.209Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CustomerController.cs",
-              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\CustomerController.cs",
-              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Controllers\\CustomerController.cs",
-              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\CustomerController.cs",
-              "RelativeToolTip": "MVC_BANK_FINAL_C\\Controllers\\CustomerController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA8AAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T11:33:54.269Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
               "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAIwEEAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwCgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T03:55:42.538Z"
+              "WhenOpened": "2026-04-27T12:33:40.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Program.cs",
+              "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Program.cs",
+              "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Program.cs",
+              "RelativeToolTip": "MVC_BANK_FINAL_C\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T12:32:51.665Z",
+              "EditorCaption": ""
             }
           ]
         }

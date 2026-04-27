@@ -1,5 +1,4 @@
-using System.Security.Cryptography;
-using System.Text;
+using BCrypt.Net;
 
 namespace MVC_BANK_FINAL_C.Helpers
 {
@@ -7,16 +6,21 @@ namespace MVC_BANK_FINAL_C.Helpers
     {
         public static string HashPassword(string password)
         {
-            using var sha256 = SHA256.Create();
-            var bytes = Encoding.UTF8.GetBytes(password);
-            var hash  = sha256.ComputeHash(bytes);
-            return Convert.ToHexString(hash).ToLower();
+            return BCrypt.Net.BCrypt.HashPassword(password, workFactor: 12);
         }
 
         public static bool VerifyPassword(string inputPassword, string storedHash)
         {
-            var inputHash = HashPassword(inputPassword);
-            return inputHash == storedHash;
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(inputPassword, storedHash);
+            }
+            catch
+            {
+                // Handles legacy SHA256 hashes gracefully — returns false
+                // so the user is prompted to reset their password
+                return false;
+            }
         }
     }
 }

@@ -22,6 +22,14 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
                 var account = await _context.Accounts.FindAsync(vm.AccountId);
                 if (account == null) return null;
 
+                // Check single transaction limit
+                if (vm.Amount > 200000)
+                    return null;
+
+                // Check account balance cap (10 Crores)
+                if (account.Balance + vm.Amount > 10000000)
+                    return null;
+
                 account.Balance += vm.Amount;
 
                 var transaction = new Transaction
@@ -58,6 +66,11 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
             {
                 var account = await _context.Accounts.FindAsync(vm.AccountId);
                 if (account == null) return null;
+
+                // Check single transaction limit
+                if (vm.Amount > 200000)
+                    return null;
+
                 if (account.Balance < vm.Amount) return null;
 
                 account.Balance -= vm.Amount;
@@ -94,6 +107,10 @@ namespace MVC_BANK_FINAL_C.Services.Implementations
         {
             try
             {
+                // Check single transaction limit
+                if (amount > 200000)
+                    return false;
+
                 var fromAccount = await _context.Accounts.FindAsync(fromAccountId);
                 var toAccount   = await _context.Accounts.FindAsync(toAccountId);
 

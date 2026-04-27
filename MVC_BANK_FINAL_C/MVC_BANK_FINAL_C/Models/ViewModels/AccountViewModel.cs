@@ -14,8 +14,9 @@ namespace MVC_BANK_FINAL_C.Models.ViewModels
         [Display(Name = "Account Type")]
         public AccountType AccountType { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Opening balance cannot be negative.")]
-        [Display(Name = "Opening Balance")]
+        [Range(0, 100000, ErrorMessage =
+            "Opening balance must be between ₹0 and ₹1,00,000.")]
+        [Display(Name = "Opening Balance (Max ₹1,00,000)")]
         [DataType(DataType.Currency)]
         public decimal InitialBalance { get; set; } = 0;
     }

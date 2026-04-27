@@ -17,7 +17,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             _context = context;
         }
 
-        // ── Login ────────────────────────────────────────────────
+        //  Login 
 
         [AllowAnonymous]
         public IActionResult Login()
@@ -39,8 +39,6 @@ namespace MVC_BANK_FINAL_C.Controllers
                 .Include(u => u.Customer)
                 .FirstOrDefaultAsync(u => u.Username == vm.Username);
 
-            // NOTE: Customers registered before password hashing was introduced will have
-            // plain-text passwords in the DB and will need to re-register or have an Admin reset their password.
             if (user == null || !PasswordHelper.VerifyPassword(vm.Password, user.Password))
             {
                 ModelState.AddModelError("", "Invalid username or password.");
@@ -64,7 +62,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // ── Register ─────────────────────────────────────────────
+        //  Register 
 
         [AllowAnonymous]
         public IActionResult Register()
@@ -129,7 +127,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        // ── Logout ───────────────────────────────────────────────
+        // Logout 
 
         [AllowAnonymous]
         public IActionResult Logout()
@@ -144,7 +142,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return View();
         }
 
-        // ── Forgot Password — Step 1: Enter Username ─────────────
+        //  Forgot Password — Step 1: Enter Username 
 
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -181,7 +179,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return RedirectToAction(nameof(ForgotPasswordStep2));
         }
 
-        // ── Forgot Password — Step 2: Security Question ──────────
+        // Forgot Password — Step 2: Security Question 
 
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPasswordStep2()
@@ -247,7 +245,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return RedirectToAction(nameof(ForgotPasswordStep3));
         }
 
-        // ── Forgot Password — Step 3: Reset Password ─────────────
+        // Forgot Password — Step 3: Reset Password 
 
         [AllowAnonymous]
         public IActionResult ForgotPasswordStep3()
@@ -295,7 +293,7 @@ namespace MVC_BANK_FINAL_C.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        // ── First Login Setup ─────────────────────────────────────
+        // First Login Setup 
 
         public IActionResult FirstLoginSetup()
         {

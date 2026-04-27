@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet add:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet ef:*)",
+      "Bash(dotnet test *)",
+      "Bash(dotnet script *)",
+      "Bash(dotnet run *)",
+      "Bash(/tmp/bcrypt_gen/out/bcrypt_gen.exe)"
+    ]
+  }
+}

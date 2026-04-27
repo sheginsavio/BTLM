@@ -170,10 +170,11 @@ namespace MVC_BANK_FINAL_C.Controllers
             if (customer == null) return NotFound();
 
             ViewBag.CanCreateAccount = (Role == "Admin" || Role == "Teller");
+            ViewBag.IsAdmin          = (Role == "Admin");
             return View(customer);
         }
 
-        // ── AJAX: Customer search for Admin/Teller ────────────────────────────
+        // AJAX: Customer search for Admin/Teller 
         [HttpGet]
         public async Task<IActionResult> SearchCustomer(string term)
         {
