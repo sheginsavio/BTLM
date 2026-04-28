@@ -1,0 +1,6 @@
+# Migration snapshot files (contain sensitive seed data)
+**/Migrations/*.Designer.cs
+**/Migrations/*ModelSnapshot.cs
+
+# Claude
+.claude/
