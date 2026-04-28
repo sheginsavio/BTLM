@@ -17,8 +17,17 @@ namespace MVC_BANK_FINAL_C.Helpers
             }
             catch
             {
-                // Handles legacy SHA256 hashes gracefully — returns false
-                // so the user is prompted to reset their password
+                return false;
+            }
+        }
+        public static bool VerifySecurityAnswer(string inputAnswer, string storedAnswer)
+        {
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(inputAnswer, storedAnswer);
+            }
+            catch
+            {
                 return false;
             }
         }

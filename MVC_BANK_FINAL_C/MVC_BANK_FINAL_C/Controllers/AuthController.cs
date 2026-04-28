@@ -227,10 +227,11 @@ namespace MVC_BANK_FINAL_C.Controllers
                 return View(vm);
             }
 
-            string hashedInput = PasswordHelper.HashPassword(
-                vm.SecurityAnswer.ToLower().Trim());
+            //string hashedInput = PasswordHelper.HashPassword(
+            //    vm.SecurityAnswer.ToLower().Trim());
 
-            if (hashedInput != user.SecurityAnswer)
+            //if (hashedInput != user.SecurityAnswer)
+            if(!PasswordHelper.VerifySecurityAnswer(vm.SecurityAnswer.ToLower().Trim(), user.SecurityAnswer))
             {
                 ModelState.AddModelError("SecurityAnswer",
                     "Incorrect answer. Please try again.");
