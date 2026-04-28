@@ -63,4 +63,13 @@ app.MapControllerRoute(
     pattern: "{controller=Auth}/{action=Login}/{id?}")
     .WithStaticAssets();
 
+// Seed default users at startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider
+                  .GetRequiredService<BankingDbContext>();
+    await db.Database.MigrateAsync();
+    await DbSeeder.SeedAsync(db);
+}
+
 app.Run();

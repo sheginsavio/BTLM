@@ -101,16 +101,6 @@ namespace MVC_BANK_FINAL_C.Data
                 .Property(r => r.BalanceRemaining)
                 .HasColumnType("decimal(18,2)");
 
-            // ── Seed default staff users ────────────────────────
-            // Passwords are pre-computed BCrypt hashes (workFactor: 12) — static strings
-            // so EF Core's model snapshot stays deterministic across builds.
-            // admin123, teller123, loan123, audit123 respectively.
-            modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Username = "admin",        Password = "$2a$12$l2rXFuxAFET9BUGQVizYD.cY0q5TVYsngGQchQuLHOVZGAVu2MCoq", Role = "Admin",       CustomerId = null, IsFirstLogin = false },
-                new User { UserId = 2, Username = "teller1",      Password = "$2a$12$cb4FQpil0DiswslbxWEL8OIMFxbMfhiMuj0O9hgrM8js6uYIi1k8G", Role = "Teller",      CustomerId = null, IsFirstLogin = false },
-                new User { UserId = 3, Username = "loanofficer1", Password = "$2a$12$seF.cDgkGBfUtVfTcfsZJONJFBL2AibfysFJjjqvwxPf0c9rSMY4q", Role = "LoanOfficer", CustomerId = null, IsFirstLogin = false },
-                new User { UserId = 4, Username = "auditor1",     Password = "$2a$12$fEX/9J2.dePY7oKY0o8j0uvOIK0ELBUWJEjmo4WRi3Wejma.//2Au", Role = "Auditor",     CustomerId = null, IsFirstLogin = false }
-            );
         }
     }
 }
