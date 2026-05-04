@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|solutionrelative:mvc_bank_final_c\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{349FFCD6-F1C1-B420-5A8E-F97830E90E04}|MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj|c:\\shegin savio s s\\visual studio community\\sample\\mvc_bank_final_c\\mvc_bank_final_c\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,26 +30,25 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Controllers\\AuthController.cs",
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAD4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T10:03:33.474Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T10:03:33.474Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PasswordHelper.cs",
               "DocumentMoniker": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Helpers\\PasswordHelper.cs",
               "RelativeDocumentMoniker": "MVC_BANK_FINAL_C\\Helpers\\PasswordHelper.cs",
               "ToolTip": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\Helpers\\PasswordHelper.cs",
               "RelativeToolTip": "MVC_BANK_FINAL_C\\Helpers\\PasswordHelper.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAYwBcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-28T09:42:13.847Z",
               "EditorCaption": ""

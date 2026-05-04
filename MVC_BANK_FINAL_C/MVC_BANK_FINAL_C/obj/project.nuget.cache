@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kxjxS2Ig8nM=",
+  "dgSpecHash": "WNlRLD2GjqQ=",
   "success": true,
   "projectFilePath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj",
   "expectedPackageFiles": [
@@ -53,5 +53,15 @@
     "C:\\Users\\2483421\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\2483421\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
+      "projectPath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\SHEGIN SAVIO S S\\Visual Studio Community\\Sample\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C\\MVC_BANK_FINAL_C.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

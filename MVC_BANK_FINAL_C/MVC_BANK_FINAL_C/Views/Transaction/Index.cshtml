@@ -11,9 +11,12 @@
     @if (canTransact)
     {
         <div class="btn-group">
-            <a asp-action="Deposit"  class="btn btn-success">
-                <i class="bi bi-cash-coin me-1"></i>Deposit
-            </a>
+            @if (userRole == "Admin" || userRole == "Teller")
+            {
+                <a asp-action="Deposit" class="btn btn-success">
+                    <i class="bi bi-cash-coin me-1"></i>Deposit
+                </a>
+            }
             <a asp-action="Withdraw" class="btn btn-warning">
                 <i class="bi bi-cash-stack me-1"></i>Withdraw
             </a>

@@ -142,7 +142,7 @@ namespace MVC_BANK_FINAL_C.Controllers
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
             }
-            if (Role != "Admin" && Role != "Teller" && Role != "Customer")
+            if (Role != "Admin" && Role != "Teller")
             {
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
@@ -150,17 +150,7 @@ namespace MVC_BANK_FINAL_C.Controllers
 
             var vm = new TransactionViewModel { TransactionType = Data.TransactionType.DEPOSIT };
 
-            if (Role == "Customer")
-            {
-                int cid            = SessionCustomerId ?? 0;
-                vm.FromAccountList = await BuildAccountList(cid);
-                ViewBag.ShowCustomerSearch = false;
-            }
-            else
-            {
-                ViewBag.ShowCustomerSearch = true;
-            }
-
+            ViewBag.ShowCustomerSearch = true;
             return View(vm);
         }
 
@@ -173,7 +163,7 @@ namespace MVC_BANK_FINAL_C.Controllers
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
             }
-            if (Role != "Admin" && Role != "Teller" && Role != "Customer")
+            if (Role != "Admin" && Role != "Teller")
             {
                 TempData["Error"] = "Access Denied.";
                 return RedirectToAction("Index", "Home");
